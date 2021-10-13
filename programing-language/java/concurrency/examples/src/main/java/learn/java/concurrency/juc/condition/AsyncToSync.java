@@ -6,9 +6,9 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 /**
- * SyncToAsync.
+ * AsyncToSync.
  */
-public class SyncToAsync {
+public class AsyncToSync {
 
     private final Lock lock = new ReentrantLock();
     private final Condition done = lock.newCondition();
