@@ -9,7 +9,7 @@ import java.util.concurrent.TimeUnit;
  * <p>
  * By 马士兵老师
  */
-public class PhaserTutorial {
+public class PhaserExample {
 
     static Random r = new Random();
     static MarriagePhaser phaser = new MarriagePhaser();

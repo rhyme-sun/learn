@@ -1,20 +1,23 @@
 package learn.java.concurrency.juc.communication;
 
 import java.util.concurrent.BrokenBarrierException;
-import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.CyclicBarrier;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
+
+import lombok.extern.slf4j.Slf4j;
 
 /**
- * {@link CountDownLatch} 基本用法
- *
- * @author ykthree
- * 2021/6/12
+ * {@link CyclicBarrier} 基本用法
  */
-public class CyclicBarrierTutorial {
+@Slf4j
+public class CyclicBarrierExample {
 
     public static void main(String[] args) {
         int parties = 20;
-        Runnable barrierAction = () -> System.out.println("Go");
+        // 执行回调的线程池，使用线程池执行回调函数，避免下一轮任务被阻塞（执行回调函数的线程是将 CyclicBarrier 内部计数器减到 0 的那个线程）
+        Executor executor = Executors.newFixedThreadPool(1);
+        Runnable barrierAction = () -> executor.execute(() -> log.info("GO"));
         CyclicBarrier barrier = new CyclicBarrier(parties, barrierAction);
 
         int total = 100;

@@ -14,7 +14,7 @@ import java.util.concurrent.locks.ReentrantLock;
  * @author ykthree
  * 2021/6/12
  */
-public class SemaphoreTutorial {
+public class SemaphoreExample {
 
 
     public static void main(String[] args) throws InterruptedException {

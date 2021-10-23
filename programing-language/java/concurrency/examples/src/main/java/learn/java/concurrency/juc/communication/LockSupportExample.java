@@ -6,7 +6,7 @@ import java.util.concurrent.locks.LockSupport;
 /**
  * {@link LockSupport}
  */
-public class LockSupportTutorial {
+public class LockSupportExample {
 
     public static void main(String[] args) {
 

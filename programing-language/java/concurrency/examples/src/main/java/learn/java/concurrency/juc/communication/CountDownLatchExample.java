@@ -10,7 +10,7 @@ import java.util.concurrent.Executors;
  * @author ykthree
  * 2021/6/12
  */
-public class CountDownLatchTutorial {
+public class CountDownLatchExample {
 
     public static void main(String[] args) throws InterruptedException {
         // waitByJoin();

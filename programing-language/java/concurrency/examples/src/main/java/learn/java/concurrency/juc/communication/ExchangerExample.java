@@ -5,7 +5,7 @@ import java.util.concurrent.Exchanger;
 /**
  * {@link Exchanger}
  */
-public class ExchangerTutorial {
+public class ExchangerExample {
 
     static Exchanger<String> exchanger = new Exchanger<>();
 

@@ -169,6 +169,7 @@ public class GetPriceExample {
                 e.printStackTrace();
             }
         }
+        executor.shutdown();
     }
 
     static int getPriceFromS1() {
