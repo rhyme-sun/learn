@@ -49,14 +49,14 @@ public class HelloXarLoader extends ClassLoader {
     }
 
     public static void main(String[] args) throws Exception {
-        String path = "F:\\LearnProjects\\learn\\programing-language\\java\\jvm\\examples\\xar\\hello.xar";
+        String path = "E:\\LearnProjects\\learn\\programing-language\\java\\jvm\\examples\\xar\\hello.xar";
         String className = "Hello";
         String methodName = "hello";
 
         HelloXarLoader loader = new HelloXarLoader(path);
         Class<?> loaderClass = loader.findClass(className);
 
-        Object hello = loaderClass.newInstance();
+        Object hello = loaderClass.getDeclaredConstructor().newInstance();
         Method method = loaderClass.getMethod(methodName);
         method.invoke(hello);
     }
