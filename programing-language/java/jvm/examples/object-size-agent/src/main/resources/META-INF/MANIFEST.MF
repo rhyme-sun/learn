@@ -1,0 +1,5 @@
+Manifest-Version: 1.0
+Premain-Class: learn.jvm.agent.ObjectSizeAgent
+Agent-Class: learn.jvm.agent.ObjectSizeAgent
+Can-Redefine-Classes: true
+Can-Retransform-Classes: true
