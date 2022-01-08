@@ -13,6 +13,7 @@
         <module>spring-ioc</module>
         <module>spring-bean</module>
         <module>spring-dependency-lookup</module>
+        <module>spring-dependency-injection</module>
     </modules>
 
     <properties>
