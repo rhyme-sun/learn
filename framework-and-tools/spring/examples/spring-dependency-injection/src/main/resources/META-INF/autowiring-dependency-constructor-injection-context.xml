@@ -6,7 +6,5 @@
 
     <import resource="user-context.xml" />
 
-    <bean id="userHolder" class="learn.spring.dependency.domain.UserHolder">
-        <property name="user" ref="user"/>
-    </bean>
+    <bean id="userHolderAutowiringConstructor" class="learn.spring.dependency.domain.UserHolder" autowire="constructor" />
 </beans>

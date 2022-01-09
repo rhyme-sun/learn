@@ -4,11 +4,7 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
         https://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <bean id="user" class="learn.spring.dependency.domain.User">
-        <property name="id" value="1"></property>
-        <property name="name" value="Simon"></property>
-        <property name="age" value="28"></property>
-    </bean>
+    <import resource="user-context.xml" />
 
     <bean id="userHolderAutowiringByName" class="learn.spring.dependency.domain.UserHolder" autowire="byName" />
     <bean id="userHolderAutowiringByType" class="learn.spring.dependency.domain.UserHolder" autowire="byType" />

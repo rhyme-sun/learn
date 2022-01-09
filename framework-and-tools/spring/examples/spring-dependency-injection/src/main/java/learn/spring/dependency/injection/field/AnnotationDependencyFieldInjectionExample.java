@@ -1,21 +1,36 @@
-package learn.spring.dependency.injection.setter;
+package learn.spring.dependency.injection.field;
+
+import javax.annotation.Resource;
+import javax.inject.Inject;
 
 import learn.spring.dependency.domain.User;
 import learn.spring.dependency.domain.UserHolder;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 import org.springframework.beans.factory.xml.XmlBeanDefinitionReader;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Primary;
 
 /**
- * AnnotationDependencySetterInjectionExample.
+ * AnnotationDependencyFieldInjectionExample.
  */
-public class AnnotationDependencySetterInjectionExample {
+public class AnnotationDependencyFieldInjectionExample {
+
+    @Autowired
+    private UserHolder userHolder;
+    // Autowired 注解会忽略掉静态字段
+    @Autowired
+    private static UserHolder staticUserHolder;
+
+    @Resource
+    private UserHolder resourceUserHolder;
+
+    @Inject
+    private UserHolder injectUserHolder;
 
     public static void main(String[] args) {
         AnnotationConfigApplicationContext applicationContext = new AnnotationConfigApplicationContext();
-        applicationContext.register(AnnotationDependencySetterInjectionExample.class);
+        applicationContext.register(AnnotationDependencyFieldInjectionExample.class);
 
         loadXmlBeanDefinition(applicationContext);
 
@@ -24,6 +39,18 @@ public class AnnotationDependencySetterInjectionExample {
         final UserHolder bean = applicationContext.getBean(UserHolder.class);
         System.out.println(bean);
 
+        final AnnotationDependencyFieldInjectionExample example = applicationContext.getBean(AnnotationDependencyFieldInjectionExample.class);
+        System.out.println(example.userHolder);
+        // true
+        System.out.println(bean == example.userHolder);
+
+        // null
+        System.out.println(staticUserHolder);
+        System.out.println(example.resourceUserHolder);
+        System.out.println(example.userHolder == example.resourceUserHolder);
+
+        System.out.println(example.injectUserHolder);
+        System.out.println(example.userHolder == example.injectUserHolder);
         applicationContext.close();
     }
 

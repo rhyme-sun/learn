@@ -4,9 +4,9 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
         https://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <import resource="user-context.xml" />
-
-    <bean id="userHolder" class="learn.spring.dependency.domain.UserHolder">
-        <property name="user" ref="user"/>
+    <bean id="user" class="learn.spring.dependency.domain.User">
+        <property name="id" value="1"></property>
+        <property name="name" value="Simon"></property>
+        <property name="age" value="28"></property>
     </bean>
 </beans>
