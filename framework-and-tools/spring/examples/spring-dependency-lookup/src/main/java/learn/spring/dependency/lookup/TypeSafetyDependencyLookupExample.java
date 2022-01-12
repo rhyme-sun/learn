@@ -8,12 +8,27 @@ import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.ListableBeanFactory;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.annotation.Bean;
 
 /**
  * 类型安全依赖查找。
  * TypeSafetyDependencyLookupExample.
  */
 public class TypeSafetyDependencyLookupExample {
+
+    @Bean
+    public User user1() {
+        final User user = new User();
+        user.setName("Simon-1");
+        return user;
+    }
+
+    @Bean
+    public User user2() {
+        final User user = new User();
+        user.setName("Simon-2");
+        return user;
+    }
 
     public static void main(String[] args) {
         AnnotationConfigApplicationContext applicationContext = new AnnotationConfigApplicationContext();
@@ -37,8 +52,9 @@ public class TypeSafetyDependencyLookupExample {
     private static void displayBeanFactoryGetBean(BeanFactory beanFactory) {
         try {
             final User bean = beanFactory.getBean(User.class);
+            System.out.println(bean);
         } catch (BeansException e) {
-            e.printStackTrace();
+            System.err.println("displayBeanFactoryGetBean: " + e.getMessage());
         }
     }
 
@@ -46,8 +62,9 @@ public class TypeSafetyDependencyLookupExample {
         try {
             final ObjectProvider<User> beanProvider = beanFactory.getBeanProvider(User.class);
             final User object = beanProvider.getObject();
+            System.out.println(object);
         } catch (BeansException e) {
-            e.printStackTrace();
+            System.err.println("displayFactoryBeanGetObject: " + e.getMessage());
         }
     }
 
@@ -55,27 +72,27 @@ public class TypeSafetyDependencyLookupExample {
         try {
             final ObjectProvider<User> beanProvider = beanFactory.getBeanProvider(User.class);
             final User ifAvailable = beanProvider.getIfAvailable();
+            System.out.println(ifAvailable);
         } catch (BeansException e) {
-            e.printStackTrace();
+            System.err.println("displayObjectProviderGetIfAvailable: " + e.getMessage());
         }
     }
 
     private static void displayListableBeanFactoryGetBeansOfType(ListableBeanFactory listableBeanFactory) {
         try {
             final Map<String, User> beansOfType = listableBeanFactory.getBeansOfType(User.class);
+            System.out.println(beansOfType);
         } catch (BeansException e) {
-            e.printStackTrace();
+            System.err.println("displayListableBeanFactoryGetBeansOfType: " + e.getMessage());
         }
     }
 
     private static void displayObjectProviderStream(BeanFactory beanFactory) {
         try {
             final ObjectProvider<User> beanProvider = beanFactory.getBeanProvider(User.class);
-            beanProvider.stream().forEach(user -> {
-                System.out.println(user);
-            });
+            beanProvider.stream().forEach(System.out::println);
         } catch (BeansException e) {
-            e.printStackTrace();
+            System.err.println("displayObjectProviderStream: " + e.getMessage());
         }
     }
 }
