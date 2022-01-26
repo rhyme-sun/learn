@@ -49,8 +49,8 @@ public class GetMinStack {
         private Stack<Integer> stackMin;
 
         public MinStack2() {
-            this.stackData = new Stack<Integer>();
-            this.stackMin = new Stack<Integer>();
+            this.stackData = new Stack<>();
+            this.stackMin = new Stack<>();
         }
 
         public void push(int newNum) {
@@ -88,6 +88,7 @@ public class GetMinStack {
         stack1.push(4);
         System.out.println(stack1.getMin());
         stack1.push(1);
+        stack1.push(1);
         System.out.println(stack1.getMin());
         System.out.println(stack1.pop());
         System.out.println(stack1.getMin());
@@ -99,6 +100,7 @@ public class GetMinStack {
         System.out.println(stack2.getMin());
         stack2.push(4);
         System.out.println(stack2.getMin());
+        stack2.push(1);
         stack2.push(1);
         System.out.println(stack2.getMin());
         System.out.println(stack2.pop());

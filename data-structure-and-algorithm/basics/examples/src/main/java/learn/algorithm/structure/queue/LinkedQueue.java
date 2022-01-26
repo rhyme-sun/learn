@@ -4,27 +4,13 @@ import java.util.LinkedList;
 import java.util.Objects;
 import java.util.Queue;
 
+import lombok.extern.slf4j.Slf4j;
+
 /**
  * 链式队列
  */
+@Slf4j
 public class LinkedQueue {
-
-    static class Node {
-
-        /**
-         * 数据
-         */
-        String data;
-
-        /**
-         * 指向下一个节点
-         */
-        Node next;
-
-        public Node(String data) {
-            this.data = data;
-        }
-    }
 
     private int capacity;
     private int size;
@@ -68,6 +54,15 @@ public class LinkedQueue {
         return data;
     }
 
+    static class Node {
+        String data;
+        Node next;
+
+        public Node(String data) {
+            this.data = data;
+        }
+    }
+
     public static void main(String[] args) {
         int testTimes = 500000;
         int maxSize = 100;
@@ -87,12 +82,12 @@ public class LinkedQueue {
                         queue.offer(num);
                     } else {
                         if (!Objects.equals(queue.poll(), myQueue.poll())) {
-                            System.out.println("Oops!");
+                            log.info("Oops!");
                         }
                     }
                 }
             }
         }
-        System.out.println("Finish!");
+        log.info("Finish!");
     }
 }

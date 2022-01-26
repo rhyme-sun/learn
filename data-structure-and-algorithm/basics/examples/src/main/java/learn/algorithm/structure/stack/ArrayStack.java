@@ -3,12 +3,12 @@ package learn.algorithm.structure.stack;
 import java.util.Objects;
 import java.util.Stack;
 
+import lombok.extern.slf4j.Slf4j;
+
 /**
  * 顺序栈，使用数组存储元素
- *
- * @author ykthree
- * 2021/3/9 17:43
  */
+@Slf4j
 public class ArrayStack {
 
     private String[] data;
@@ -71,12 +71,12 @@ public class ArrayStack {
                         stack.push(num);
                     } else {
                         if (!Objects.equals(stack.pop(), myStack.pop())) {
-                            System.out.println("Oops!");
+                            log.info("Oops!");
                         }
                     }
                 }
             }
         }
-        System.out.println("Finish!");
+        log.info("Finish!");
     }
 }

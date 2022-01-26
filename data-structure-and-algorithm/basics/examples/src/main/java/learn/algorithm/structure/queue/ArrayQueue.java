@@ -4,9 +4,12 @@ import java.util.LinkedList;
 import java.util.Objects;
 import java.util.Queue;
 
+import lombok.extern.slf4j.Slf4j;
+
 /**
  * 顺序队列，基于数组实现
  */
+@Slf4j
 public class ArrayQueue {
 
     private String[] data;
@@ -71,12 +74,12 @@ public class ArrayQueue {
                         queue.offer(num);
                     } else {
                         if (!Objects.equals(queue.poll(), myQueue.poll())) {
-                            System.out.println("Oops!");
+                            log.info("Oops!");
                         }
                     }
                 }
             }
         }
-        System.out.println("Finish!");
+        log.info("Finish!");
     }
 }

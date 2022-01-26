@@ -4,9 +4,12 @@ import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Stack;
 
+import lombok.extern.slf4j.Slf4j;
+
 /**
  * 用两个队列实现栈
  */
+@Slf4j
 public class TwoQueueImplementStack {
 
     static class TwoQueueStack<T> {
@@ -58,7 +61,7 @@ public class TwoQueueImplementStack {
         for (int i = 0; i < testTime; i++) {
             if (myStack.isEmpty()) {
                 if (!test.isEmpty()) {
-                    System.out.println("Oops!");
+                    log.info("Oops!");
                 }
                 int num = (int) (Math.random() * max);
                 myStack.push(num);
@@ -74,16 +77,15 @@ public class TwoQueueImplementStack {
                     }
                 } else if (Math.random() < 0.75) {
                     if (!myStack.poll().equals(test.pop())) {
-                        System.out.println("Oops!");
+                        log.info("Oops!");
                     }
                 } else {
                     if (myStack.isEmpty() != test.isEmpty()) {
-                        System.out.println("Oops!");
+                        log.info("Oops!");
                     }
                 }
             }
         }
-
-        System.out.println("Finish!");
+        log.info("Finish!");
     }
 }

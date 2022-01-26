@@ -3,24 +3,13 @@ package learn.algorithm.structure.stack;
 import java.util.Objects;
 import java.util.Stack;
 
+import lombok.extern.slf4j.Slf4j;
+
 /**
  * 链式栈，使用链表存储元素
- *
- * @author ykthree
- * 2021/3/9 19:19
  */
+@Slf4j
 public class LinkedStack {
-
-    static class Node {
-
-        String data;
-        Node last;
-
-        public Node(String data, Node last) {
-            this.data = data;
-            this.last = last;
-        }
-    }
 
     private Node top;
 
@@ -58,6 +47,17 @@ public class LinkedStack {
         return data;
     }
 
+    static class Node {
+
+        String data;
+        Node last;
+
+        public Node(String data, Node last) {
+            this.data = data;
+            this.last = last;
+        }
+    }
+
     public static void main(String[] args) {
         int testTimes = 500000;
         int maxSize = 100;
@@ -77,12 +77,12 @@ public class LinkedStack {
                         stack.push(num);
                     } else {
                         if (!Objects.equals(stack.pop(), myStack.pop())) {
-                            System.out.println("Oops!");
+                            log.info("Oops!");
                         }
                     }
                 }
             }
         }
-        System.out.println("Finish!");
+        log.info("Finish!");
     }
 }
