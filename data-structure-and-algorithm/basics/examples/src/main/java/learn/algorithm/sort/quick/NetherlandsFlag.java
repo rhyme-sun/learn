@@ -1,24 +1,23 @@
 package learn.algorithm.sort.quick;
 
 import learn.algorithm.sort.SortTestUtils;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * 荷兰国旗问题
- *
- * @author ykthree
- * 2021/6/20
  */
+@Slf4j
 public class NetherlandsFlag {
 
     /**
-     * 给定一个数组 arr，和一个整数 num。请把小于 num 的数放在数组的左边，等于的放中间，大于 num 的数放在数组的右边。
-     * 实现步骤：
-     * 定义小于区的右边界 less，其实位置为 l-1，大于区的左边界 more，起始区为 r。
-     * 遍历 [l,r] 范围内数组元素，比较 arr[i] 和 arr[r] 的大小：
-     * 若 arr[i] < arr[r]，和小于区边界下一个元素做交换，小于区右边界右移一位，比较下个数；
-     * 若 arr[i] = arr[r]，不做处理，比较下个数；
-     * 若 arr[i] > arr[r]，和大于区的右边界前一个数交换，大于区左边界左移一位，下标不移动。
-     * 最后将 r 位置的数，和大于区左边界的数交换。
+     * 给定一个数组 arr，在 [l,r] 范围内，选择 arr[r] 作为分界数，将数组分成三个区，使得小于 arr[r] 的数在左边，等于 arr[r] 的数在中间，
+     * 大于 arr[r] 的数在右边，最后返回等于区的左右边界，步骤为：
+     * 定义等于区的左边界（记为 less）的起始位置为 l-1，定义右边界（记为 more）的起始位置为 r；
+     * 遍历 [l,r-1]，比较 arr[i] 和 arr[r] 的大小；
+     * 若 arr[i] < arr[r]，将 arr[i] 和 less 的下一个位置做交换，并将 less 右移一位；
+     * 若 arr[i] = arr[r]，不做处理，比较下一个数；
+     * 若 arr[i] > arr[r]，将 arr[i] 和 more 前一个位置的数做交换，并且将 more 左移一位，光标不移动（即不执行 i++）；
+     * 最后将 arr[r] 和 more 位置的数做交换，此时的 less 和 more 就是等于区的左右边界，且分区完毕。
      *
      * @return 等于区起始和终止位置
      */
@@ -33,14 +32,14 @@ public class NetherlandsFlag {
         int more = r;
         for (int i = l; i < more; ) {
             if (arr[i] < arr[r]) {
-                swap(arr, ++less, i++);
+                SortTestUtils.swap(arr, ++less, i++);
             } else if (arr[i] == arr[r]) {
                 i++;
             } else {
-                swap(arr, --more, i);
+                SortTestUtils.swap(arr, --more, i);
             }
         }
-        swap(arr, more, r);
+        SortTestUtils.swap(arr, more, r);
         return new int[]{less + 1, more};
     }
 
@@ -68,12 +67,6 @@ public class NetherlandsFlag {
         return new int[]{l + less, r - more};
     }
 
-    private static void swap(int[] arr, int i, int j) {
-        int temp = arr[i];
-        arr[i] = arr[j];
-        arr[j] = temp;
-    }
-
     public static void main(String[] args) {
         int testTime = 500000;
         int maxSize = 10;
@@ -93,7 +86,7 @@ public class NetherlandsFlag {
                 break;
             }
         }
-        System.out.println(succeed ? "Nice!" : "Oops!");
+        log.info(succeed ? "Nice!" : "Oops!");
         int[] arr = SortTestUtils.generateRandomArray(maxSize, maxValue);
         SortTestUtils.printArray(arr);
         int[] bounds = netherLandsFlag(arr, 0, arr.length - 1);

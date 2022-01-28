@@ -11,7 +11,7 @@ import lombok.extern.slf4j.Slf4j;
  * ...
  * arr[0-1] 范围上，依次比较相邻的两个数，前一个位置比后一个位置大，则交换。
  * 时间复杂度：
- * O(n²)
+ *
  */
 @Slf4j
 public class BubbleSort {
@@ -29,6 +29,24 @@ public class BubbleSort {
         }
     }
 
+    static void bubbleSort2(int[] array) {
+        if (array == null || array.length < 2) {
+            return;
+        }
+        for (int i = array.length - 1; i > 0; i--) {
+            boolean swap = false;
+            for (int j = 0; j < i; j++) {
+                if (array[j] > array[j + 1]) {
+                    SortTestUtils.swap(array, j, j + 1);
+                    swap = true;
+                }
+            }
+            if (!swap) {
+                break;
+            }
+        }
+    }
+
     public static void main(String[] args) {
         int testTime = 500000;
         int maxSize = 100;
@@ -38,7 +56,7 @@ public class BubbleSort {
             int[] arr1 = SortTestUtils.generateRandomArray(maxSize, maxValue);
             int[] arr2 = SortTestUtils.copyArray(arr1);
             bubbleSort(arr1);
-            SortTestUtils.comparator(arr2);
+            bubbleSort2(arr2);
             if (!SortTestUtils.isEqual(arr1, arr2)) {
                 succeed = false;
                 SortTestUtils.printArray(arr1);

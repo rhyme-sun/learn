@@ -1,23 +1,22 @@
 package learn.algorithm.sort.quick;
 
 import learn.algorithm.sort.SortTestUtils;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * 分区问题
- *
- * @author ykthree
- * 2021/6/20
  */
+@Slf4j
 public class Partition {
 
     /**
-     * 对数组 arr 进行分区，使得 [l,r] 范围内，小于等于 arr[r] 的数再左边，大于 arr[r] 的数在右边。返回分界位置。
-     * 实现步骤：
-     * 定义小于等于区的右边界（less），起始位置为 l-1；
-     * 遍历 [l,r-1]，比较 arr[i] 和 arr[r] 的大小：
-     * 若 arr[i] <= arr[r]，和右边界下一个位置做交换，并将右边界右移一位，比较下个数；
-     * 若 arr[i] > arr[r]，不做处理，比较下个数。
-     * 最后将 r 位置的数和右边界下一个位置做交换，返回 less。
+     * 给定一个数组 arr，在 [l,r] 范围内，选定 arr[r] 为分界数，使得小于等于 arr[r] 的数在左边，大于 arr[r] 的数在右边，
+     * 最后返回分界位置，步骤如下：
+     * 定义分界起始位置（记为 less）为 l-1；
+     * 遍历 [l, r-1]，比较 arr[i] 和 arr[r] 的大小；
+     * 若 arr[i] <= arr[r]，将 arr[i] 和 less 的下一个位置做交换，并将 less 右移一位；
+     * 若 arr[i] > arr[r]，不做处理，比较下个数；
+     * 最后将 r 位置的数和 less 的下一个位置交换，并将 less 右移一位，此时的 less 就是最终的分界位置，且分区完毕。
      *
      * @return 分界位置
      */
@@ -31,21 +30,15 @@ public class Partition {
         int less = l - 1;
         for (int i = l; i < r; i++) {
             if (arr[i] <= arr[r]) {
-                swap(arr, ++less, i);
+                SortTestUtils.swap(arr, ++less, i);
             }
         }
-        swap(arr, ++less, r);
+        SortTestUtils.swap(arr, ++less, r);
         return less;
     }
 
-    private static void swap(int[] arr, int i, int j) {
-        int temp = arr[i];
-        arr[i] = arr[j];
-        arr[j] = temp;
-    }
-
     /**
-     * for test
+     * for test，仅仅是为了找到边界位置，并没有进行分区，过程如下：
      * 查找数组 [l,r] 范围内小于等于 arr[r] 的个数 less，则 l+less-1 就是小于等于边界位置。
      */
     static int comparator(int[] arr, int l, int r) {
@@ -83,11 +76,11 @@ public class Partition {
                 break;
             }
         }
-        System.out.println(succeed ? "Nice!" : "Oops!");
+        log.info(succeed ? "Nice!" : "Oops!");
         int[] arr = SortTestUtils.generateRandomArray(maxSize, maxValue);
         SortTestUtils.printArray(arr);
         int bounds = partition(arr, 0, arr.length - 1);
         SortTestUtils.printArray(arr);
-        System.out.println(bounds);
+        log.info("{}", bounds);
     }
 }

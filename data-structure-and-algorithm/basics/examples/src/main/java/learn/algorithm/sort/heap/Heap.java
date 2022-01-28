@@ -1,8 +1,11 @@
 package learn.algorithm.sort.heap;
 
+import lombok.extern.slf4j.Slf4j;
+
 /**
  * 堆结构
  */
+@Slf4j
 public class Heap {
 
     /**
@@ -133,10 +136,10 @@ public class Heap {
             int curOpTimes = (int) (Math.random() * limit);
             for (int j = 0; j < curOpTimes; j++) {
                 if (my.isEmpty() != test.isEmpty()) {
-                    System.out.println("Oops!");
+                    log.info("Oops!");
                 }
                 if (my.isFull() != test.isFull()) {
-                    System.out.println("Oops!");
+                    log.info("Oops!");
                 }
                 if (my.isEmpty()) {
                     int curValue = (int) (Math.random() * value);
@@ -144,7 +147,7 @@ public class Heap {
                     test.push(curValue);
                 } else if (my.isFull()) {
                     if (my.pop() != test.pop()) {
-                        System.out.println("Oops!");
+                        log.info("Oops!");
                     }
                 } else {
                     if (Math.random() < 0.5) {
@@ -153,12 +156,12 @@ public class Heap {
                         test.push(curValue);
                     } else {
                         if (my.pop() != test.pop()) {
-                            System.out.println("Oops!");
+                            log.info("Oops!");
                         }
                     }
                 }
             }
         }
-        System.out.println("Nice!");
+        log.info("Nice!");
     }
 }

@@ -3,15 +3,15 @@ package learn.algorithm.sort.merge;
 import learn.algorithm.sort.SortTestUtils;
 
 /**
- * 数组中某个元素 x，若其右边的元素 y 比 x 大，则存在一个升序对（x,y），求数组升序对总个数。
+ * 数组中某个元素 x，若其右边的元素 y 比 x 小，则存在一个降序对（x,y），求数组降序对总个数。
  * <p>
  * 比如：有这样的一个数组 [1,3,4,2,5]
- * 1 右边的升序对个数：4
- * 3 右边的升序对个数：2
- * 4 右边的升序对个数：1
- * 2 右边的升序对个数：1
- * 5 右边的升序对个数：0
- * 所以数组升序对的个数为：4+2+1+1+0=9
+ * 1 右边的降序对个数：0
+ * 3 右边的降序对个数：1
+ * 4 右边的降序对个数：1
+ * 2 右边的降序对个数：0
+ * 5 右边的降序对个数：0
+ * 所以数组降序对的个数为：0+1+1+0+0=2
  */
 public class DescendOrderPair {
 
@@ -34,7 +34,7 @@ public class DescendOrderPair {
     }
 
     private static int merge(int[] arr, int l, int m, int r) {
-        int[] help = new int[r - l + 1];
+        int[] temp = new int[r - l + 1];
         int i = 0;
         int p1 = l;
         int p2 = m + 1;
@@ -43,18 +43,18 @@ public class DescendOrderPair {
             if (arr[p1] > arr[p2]) {
                 result += (m - p1 + 1);
             }
-            help[i++] = arr[p1] <= arr[p2] ? arr[p1++] : arr[p2++];
+            temp[i++] = arr[p1] <= arr[p2] ? arr[p1++] : arr[p2++];
         }
 
         while (p1 <= m) {
-            help[i++] = arr[p1++];
+            temp[i++] = arr[p1++];
         }
         while (p2 <= r) {
-            help[i++] = arr[p2++];
+            temp[i++] = arr[p2++];
         }
 
-        for (int j = 0; j < help.length; j++) {
-            arr[l + j] = help[j];
+        for (int j = 0; j < temp.length; j++) {
+            arr[l + j] = temp[j];
         }
         return result;
     }

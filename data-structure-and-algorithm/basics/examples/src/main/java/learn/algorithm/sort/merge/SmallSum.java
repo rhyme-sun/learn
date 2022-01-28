@@ -33,7 +33,7 @@ public class SmallSum {
     }
 
     private static int merge(int[] arr, int l, int m, int r) {
-        int[] help = new int[r - l + 1];
+        int[] temp = new int[r - l + 1];
         int i = 0;
         int p1 = l;
         int p2 = m + 1;
@@ -42,18 +42,18 @@ public class SmallSum {
             if (arr[p1] < arr[p2]) {
                 result += (r - p2 + 1) * arr[p1];
             }
-            help[i++] = arr[p1] < arr[p2] ? arr[p1++] : arr[p2++];
+            temp[i++] = arr[p1] < arr[p2] ? arr[p1++] : arr[p2++];
         }
 
         while (p1 <= m) {
-            help[i++] = arr[p1++];
+            temp[i++] = arr[p1++];
         }
         while (p2 <= r) {
-            help[i++] = arr[p2++];
+            temp[i++] = arr[p2++];
         }
 
-        for (int j = 0; j < help.length; j++) {
-            arr[l + j] = help[j];
+        for (int j = 0; j < temp.length; j++) {
+            arr[l + j] = temp[j];
         }
         return result;
     }
@@ -66,8 +66,23 @@ public class SmallSum {
             return 0;
         }
         int result = 0;
+        for (int i = 1; i < arr.length; i++) {
+            for (int j = 0; j < i; j++) {
+                if (arr[j] < arr[i]) {
+                    result += arr[j];
+                }
+            }
+        }
+        return result;
+    }
+
+    static int comparator2(int[] arr) {
+        if (arr == null || arr.length < 2) {
+            return 0;
+        }
+        int result = 0;
         for (int i = 0; i < arr.length; i++) {
-            for (int j = i + 1; j < arr.length; j++) {
+            for (int j = i+1; j < arr.length; j++) {
                 if (arr[i] < arr[j]) {
                     result += arr[i];
                 }

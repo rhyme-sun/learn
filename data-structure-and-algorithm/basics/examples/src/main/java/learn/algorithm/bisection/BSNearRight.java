@@ -5,9 +5,6 @@ import lombok.extern.slf4j.Slf4j;
 
 /**
  * 在一个有序数组（从小到大）中，找 <= 某个数最右侧的位置（小于或等于某个数的最大值）
- *
- * @author ykthree
- * 2021/6/13
  */
 @Slf4j
 public class BSNearRight {

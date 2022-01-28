@@ -1,10 +1,12 @@
 package learn.algorithm.sort.heap;
 
 import learn.algorithm.sort.SortTestUtils;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * 堆排序（从小到大）
  */
+@Slf4j
 public class HeapSort {
 
     /**
@@ -18,11 +20,11 @@ public class HeapSort {
         for (int i = 0; i < arr.length; i++) {
             heapInsert(arr, i);
         }
-        // 将堆顶和堆尾元素交换（即最大元素放到了数组末尾），令除去堆尾元素的部分再成为一个大根堆
+        // 将堆顶和堆尾元素交换（即最大元素放到了数组末尾），让除去堆尾元素的部分再成为一个大根堆
         int heapSize = arr.length;
         while (heapSize > 0) {
-            heapify(arr, 0, heapSize);
             swap(arr, 0, --heapSize);
+            heapify(arr, 0, heapSize);
         }
     }
 
@@ -40,8 +42,8 @@ public class HeapSort {
         // 将堆顶和堆尾元素交换（即最大元素放到了数组末尾），令除去堆尾元素的部分再成为一个大根堆
         int heapSize = arr.length;
         while (heapSize > 0) {
-            heapify(arr, 0, heapSize);
             swap(arr, 0, --heapSize);
+            heapify(arr, 0, heapSize);
         }
     }
 
@@ -91,7 +93,7 @@ public class HeapSort {
                 break;
             }
         }
-        System.out.println(succeed ? "Nice!" : "Oops!");
+        log.info(succeed ? "Nice!" : "Oops!");
         int[] arr = SortTestUtils.generateRandomArray(maxSize, maxValue);
         SortTestUtils.printArray(arr);
         heapSort2(arr);

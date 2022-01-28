@@ -5,9 +5,6 @@ import lombok.extern.slf4j.Slf4j;
 
 /**
  * 局部最少值问题
- *
- * @author ykthree
- * 2021/6/13
  */
 @Slf4j
 public class BSLocalLess {

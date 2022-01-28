@@ -4,9 +4,6 @@ import learn.algorithm.sort.SortTestUtils;
 
 /**
  * 随机快排
- *
- * @author ykthree
- * 2021/6/20
  */
 public class QuickSort {
 
@@ -54,16 +51,10 @@ public class QuickSort {
         if (l >= r) {
             return;
         }
-        swap(arr, l + (int) (Math.random() * (r - l + 1)), r);
+        SortTestUtils.swap(arr, l + (int) (Math.random() * (r - l + 1)), r);
         int[] equalArea = NetherlandsFlag.netherLandsFlag(arr, l, r);
         process3(arr, l, equalArea[0] - 1);
         process3(arr, equalArea[1] + 1, r);
-    }
-
-    private static void swap(int[] arr, int i, int j) {
-        int temp = arr[i];
-        arr[i] = arr[j];
-        arr[j] = temp;
     }
 
     public static void main(String[] args) {

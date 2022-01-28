@@ -10,9 +10,6 @@ package learn.algorithm.sort;
  * array[0~n-1] 范围内，array[n-1] 依次和前面的数比较，小则交换；
  * 时间复杂度：
  * O(n²)
- *
- * @author ykthree
- * 2021/4/18
  */
 public class InsertionSort {
 

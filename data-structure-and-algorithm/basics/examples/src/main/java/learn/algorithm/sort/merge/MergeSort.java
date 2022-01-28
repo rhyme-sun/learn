@@ -28,27 +28,6 @@ public class MergeSort {
         merge(arr, l, m, r);
     }
 
-    private static void merge(int[] arr, int l, int m, int r) {
-        int[] help = new int[r - l + 1];
-        int i = 0;
-        int p1 = l;
-        int p2 = m + 1;
-        while (p1 <= m && p2 <= r) {
-            help[i++] = arr[p1] <= arr[p2] ? arr[p1++] : arr[p2++];
-        }
-
-        while (p1 <= m) {
-            help[i++] = arr[p1++];
-        }
-        while (p2 <= r) {
-            help[i++] = arr[p2++];
-        }
-
-        for (int j = 0; j < help.length; j++) {
-            arr[l + j] = help[j];
-        }
-    }
-
     /**
      * 非递归实现，依次对每 2 个元素（mergeSize=1，一个元素为一组，分为左右两组），每 4 个元素（mergeSize=2），每 8 个元素（mergeSize=4）
      * 每 16 个元素（mergeSize=8）... 进行 merge 操作。直到 mergeSize >= n（左组包含了全部数组元素）。
@@ -78,6 +57,27 @@ public class MergeSort {
                 break;
             }
             mergeSize <<= 1;
+        }
+    }
+
+    private static void merge(int[] arr, int l, int m, int r) {
+        int[] temp = new int[r - l + 1];
+        int i = 0;
+        int p1 = l;
+        int p2 = m + 1;
+        while (p1 <= m && p2 <= r) {
+            temp[i++] = arr[p1] <= arr[p2] ? arr[p1++] : arr[p2++];
+        }
+
+        while (p1 <= m) {
+            temp[i++] = arr[p1++];
+        }
+        while (p2 <= r) {
+            temp[i++] = arr[p2++];
+        }
+
+        for (int j = 0; j < temp.length; j++) {
+            arr[l + j] = temp[j];
         }
     }
 

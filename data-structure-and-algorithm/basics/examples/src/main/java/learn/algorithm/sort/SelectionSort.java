@@ -10,9 +10,6 @@ package learn.algorithm.sort;
  * arr[n-2~n-1] 范围上，找到最小值，将最小值放到 n-2 上。
  * 时间复杂度：
  * O(n²)
- *
- * @author ykthree
- * 2021/4/18
  */
 public class SelectionSort {
 

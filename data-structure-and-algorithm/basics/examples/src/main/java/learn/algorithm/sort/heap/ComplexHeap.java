@@ -5,17 +5,20 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.PriorityQueue;
 
+import lombok.extern.slf4j.Slf4j;
+
 /**
  * 更复杂的堆， 支持存储对象（范型），自定义比较器（决定是大根堆或小根堆），resign 堆（在堆排好顺序后，调用对象内部方法手动修改属性值，
  * 重新调整堆中元素顺序）
  */
+@Slf4j
 public class ComplexHeap {
 
     public static class MyHeap<T> {
-        private ArrayList<T> heap;
-        private HashMap<T, Integer> indexMap;
+        private final ArrayList<T> heap;
+        private final HashMap<T, Integer> indexMap;
         private int heapSize;
-        private Comparator<? super T> comparator;
+        private final Comparator<? super T> comparator;
 
         public MyHeap(Comparator<? super T> com) {
             heap = new ArrayList<>();
@@ -112,12 +115,12 @@ public class ComplexHeap {
     }
 
     public static void main(String[] args) {
-        Student s1 = null;
-        Student s2 = null;
-        Student s3 = null;
-        Student s4 = null;
-        Student s5 = null;
-        Student s6 = null;
+        Student s1;
+        Student s2;
+        Student s3;
+        Student s4 ;
+        Student s5;
+        Student s6;
 
         s1 = new Student(2, 50, 11111);
         s2 = new Student(1, 60, 22222);
@@ -135,10 +138,10 @@ public class ComplexHeap {
         heap.add(s6);
         while (!heap.isEmpty()) {
             Student cur = heap.poll();
-            System.out.println(cur.classNo + "," + cur.age + "," + cur.id);
+            log.info(cur.classNo + "," + cur.age + "," + cur.id);
         }
 
-        System.out.println("===============");
+        log.info("===============");
 
         MyHeap<Student> myHeap = new MyHeap<>(new StudentComparator());
         myHeap.push(s1);
@@ -149,10 +152,10 @@ public class ComplexHeap {
         myHeap.push(s6);
         while (!myHeap.isEmpty()) {
             Student cur = myHeap.pop();
-            System.out.println(cur.classNo + "," + cur.age + "," + cur.id);
+            log.info(cur.classNo + "," + cur.age + "," + cur.id);
         }
 
-        System.out.println("===============");
+        log.info("===============");
 
         s1 = new Student(2, 50, 11111);
         s2 = new Student(1, 60, 22222);
@@ -177,10 +180,10 @@ public class ComplexHeap {
 
         while (!heap.isEmpty()) {
             Student cur = heap.poll();
-            System.out.println(cur.classNo + "," + cur.age + "," + cur.id);
+            log.info(cur.classNo + "," + cur.age + "," + cur.id);
         }
 
-        System.out.println("===============");
+        log.info("===============");
 
         s1 = new Student(2, 50, 11111);
         s2 = new Student(1, 60, 22222);
@@ -209,11 +212,11 @@ public class ComplexHeap {
 
         while (!myHeap.isEmpty()) {
             Student cur = myHeap.pop();
-            System.out.println(cur.classNo + "," + cur.age + "," + cur.id);
+            log.info(cur.classNo + "," + cur.age + "," + cur.id);
         }
 
         // 对数器
-        System.out.println("Test begin.");
+        log.info("Test begin.");
         int maxValue = 100000;
         int pushTime = 1000000;
         int resignTime = 100;
@@ -233,10 +236,10 @@ public class ComplexHeap {
         while (test.isEmpty()) {
             Student cur = test.pop();
             if (cur.age < preAge) {
-                System.out.println("Oops!");
+                log.info("Oops!");
             }
             preAge = cur.age;
         }
-        System.out.println("Nice!");
+        log.info("Nice!");
     }
 }
