@@ -1,7 +1,5 @@
 package learn.java.basics.collection;
 
-import java.util.concurrent.ConcurrentHashMap;
-
 /**
  * ConcurrentHashMapExample.
  */
