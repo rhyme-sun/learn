@@ -53,11 +53,11 @@ public class TwoStacksImplementQueue {
         test.add(1);
         test.add(2);
         test.add(3);
-        System.out.println(test.peek());
-        System.out.println(test.poll());
-        System.out.println(test.peek());
-        System.out.println(test.poll());
-        System.out.println(test.peek());
-        System.out.println(test.poll());
+        log.info(test.peek());
+        log.info(test.poll());
+        log.info(test.peek());
+        log.info(test.poll());
+        log.info(test.peek());
+        log.info(test.poll());
     }
 }

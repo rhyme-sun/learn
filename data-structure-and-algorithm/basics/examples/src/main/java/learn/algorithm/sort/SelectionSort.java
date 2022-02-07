@@ -46,7 +46,7 @@ public class SelectionSort {
                 break;
             }
         }
-        System.out.println(succeed ? "Nice!" : "Oops!");
+        log.info(succeed ? "Nice!" : "Oops!");
         int[] arr = SortTestUtils.generateRandomArray(maxSize, maxValue);
         SortTestUtils.printArray(arr);
         sectionSort(arr);

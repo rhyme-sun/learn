@@ -1,4 +1,4 @@
-package learn.algorithm.sort.heap;
+package learn.algorithm.sort.heap.usage;
 
 import java.util.Arrays;
 import java.util.PriorityQueue;
@@ -7,7 +7,10 @@ import learn.algorithm.sort.SortTestUtils;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * 已知一个几乎有序的数组。几乎有序是指，如果把数组排好顺序的话，每个元素移动的距离一定不超过 k，并且 k 相对于数组长度来说是比较小的。
+ * 几乎有序数组排序：
+ * <p>
+ * 已知一个几乎有序的数组。几乎有序是指，如果把数组排好顺序的话，每个元素移动的距离一定不超过 k，并且 k 相对于数组长度来说是比较小的，
+ * 对这个数组进行排序。
  */
 @Slf4j
 public class SortArrayDistanceLessK {

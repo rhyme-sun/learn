@@ -73,7 +73,7 @@ public class TwoQueueImplementStack {
                     test.push(num);
                 } else if (Math.random() < 0.5) {
                     if (!myStack.peek().equals(test.peek())) {
-                        System.out.println("Oops!");
+                        log.info("Oops!");
                     }
                 } else if (Math.random() < 0.75) {
                     if (!myStack.poll().equals(test.pop())) {

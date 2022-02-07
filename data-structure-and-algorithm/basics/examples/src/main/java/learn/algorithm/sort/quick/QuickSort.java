@@ -77,7 +77,7 @@ public class QuickSort {
                 break;
             }
         }
-        System.out.println(succeed ? "Nice!" : "Oops!");
+        log.info(succeed ? "Nice!" : "Oops!");
         int[] arr = SortTestUtils.generateRandomArray(maxSize, maxValue);
         SortTestUtils.printArray(arr);
         int[] arrA = SortTestUtils.copyArray(arr);

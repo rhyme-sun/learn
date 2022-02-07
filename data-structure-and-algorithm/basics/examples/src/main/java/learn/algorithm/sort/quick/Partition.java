@@ -71,8 +71,8 @@ public class Partition {
                 succeed = false;
                 SortTestUtils.printArray(arr1);
                 SortTestUtils.printArray(arr2);
-                System.out.println(bounds1);
-                System.out.println(bounds2);
+                log.info(bounds1);
+                log.info(bounds2);
                 break;
             }
         }

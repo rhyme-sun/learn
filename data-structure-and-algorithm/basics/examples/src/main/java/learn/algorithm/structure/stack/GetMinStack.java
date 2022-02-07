@@ -84,26 +84,26 @@ public class GetMinStack {
     public static void main(String[] args) {
         MinStack1 stack1 = new MinStack1();
         stack1.push(3);
-        System.out.println(stack1.getMin());
+        log.info(stack1.getMin());
         stack1.push(4);
-        System.out.println(stack1.getMin());
+        log.info(stack1.getMin());
         stack1.push(1);
         stack1.push(1);
-        System.out.println(stack1.getMin());
-        System.out.println(stack1.pop());
-        System.out.println(stack1.getMin());
+        log.info(stack1.getMin());
+        log.info(stack1.pop());
+        log.info(stack1.getMin());
 
-        System.out.println("=============");
+        log.info("=============");
 
         MinStack2 stack2 = new MinStack2();
         stack2.push(3);
-        System.out.println(stack2.getMin());
+        log.info(stack2.getMin());
         stack2.push(4);
-        System.out.println(stack2.getMin());
+        log.info(stack2.getMin());
         stack2.push(1);
         stack2.push(1);
-        System.out.println(stack2.getMin());
-        System.out.println(stack2.pop());
-        System.out.println(stack2.getMin());
+        log.info(stack2.getMin());
+        log.info(stack2.pop());
+        log.info(stack2.getMin());
     }
 }
