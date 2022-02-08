@@ -2,9 +2,12 @@ package learn.algorithm.structure.stack;
 
 import java.util.Stack;
 
+import lombok.extern.slf4j.Slf4j;
+
 /**
  * 使用栈实现队列
  */
+@Slf4j
 public class TwoStacksImplementQueue {
 
     static class TwoStacksQueue {
@@ -53,11 +56,11 @@ public class TwoStacksImplementQueue {
         test.add(1);
         test.add(2);
         test.add(3);
-        log.info(test.peek());
-        log.info(test.poll());
-        log.info(test.peek());
-        log.info(test.poll());
-        log.info(test.peek());
-        log.info(test.poll());
+        log.info("{}", test.peek());
+        log.info("{}", test.poll());
+        log.info("{}", test.peek());
+        log.info("{}", test.poll());
+        log.info("{}", test.peek());
+        log.info("{}", test.poll());
     }
 }

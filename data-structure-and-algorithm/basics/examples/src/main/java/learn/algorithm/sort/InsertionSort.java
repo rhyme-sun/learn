@@ -1,5 +1,7 @@
 package learn.algorithm.sort;
 
+import lombok.extern.slf4j.Slf4j;
+
 /**
  * 插入排序（从小到大），过程：
  * 一个长度为 n 的数组，n > 2
@@ -11,6 +13,7 @@ package learn.algorithm.sort;
  * 时间复杂度：
  * O(n²)
  */
+@Slf4j
 public class InsertionSort {
 
     static void insertionSort(int[] array) {

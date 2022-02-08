@@ -1,6 +1,7 @@
 package learn.algorithm.sort.merge.usage;
 
 import learn.algorithm.sort.SortTestUtils;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * 数组中某个元素 x，若其右边的元素 y 比 x 小，则存在一个降序对（x,y），求数组降序对总个数。
@@ -13,6 +14,7 @@ import learn.algorithm.sort.SortTestUtils;
  * 5 右边的降序对个数：0
  * 所以数组降序对的个数为：0+1+1+0+0=2
  */
+@Slf4j
 public class DescendOrderPair {
 
     /**
@@ -70,7 +72,7 @@ public class DescendOrderPair {
         for (int i = 0; i < arr.length; i++) {
             for (int j = i + 1; j < arr.length; j++) {
                 if (arr[i] > arr[j]) {
-                    result ++;
+                    result++;
                 }
             }
         }
@@ -97,6 +99,6 @@ public class DescendOrderPair {
         log.info(succeed ? "Nice!" : "Oops!");
         int[] arr = SortTestUtils.generateRandomArray(maxSize, maxValue);
         SortTestUtils.printArray(arr);
-        log.info(count(arr));
+        log.info("{}", count(arr));
     }
 }

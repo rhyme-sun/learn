@@ -2,14 +2,18 @@ package learn.algorithm.structure.stack;
 
 import java.util.Stack;
 
+import lombok.extern.slf4j.Slf4j;
+
 /**
  * 获取栈中最小的元素，要求时间复杂度为 O(1)
  */
+@Slf4j
 public class GetMinStack {
 
     static class MinStack1 {
-        private Stack<Integer> stackData;
-        private Stack<Integer> stackMin;
+
+        private final Stack<Integer> stackData;
+        private final Stack<Integer> stackMin;
 
         public MinStack1() {
             this.stackData = new Stack<>();
@@ -45,8 +49,9 @@ public class GetMinStack {
     }
 
     static class MinStack2 {
-        private Stack<Integer> stackData;
-        private Stack<Integer> stackMin;
+
+        private final Stack<Integer> stackData;
+        private final Stack<Integer> stackMin;
 
         public MinStack2() {
             this.stackData = new Stack<>();
@@ -84,26 +89,26 @@ public class GetMinStack {
     public static void main(String[] args) {
         MinStack1 stack1 = new MinStack1();
         stack1.push(3);
-        log.info(stack1.getMin());
+        log.info("{}", stack1.getMin());
         stack1.push(4);
-        log.info(stack1.getMin());
+        log.info("{}", stack1.getMin());
         stack1.push(1);
         stack1.push(1);
-        log.info(stack1.getMin());
-        log.info(stack1.pop());
-        log.info(stack1.getMin());
+        log.info("{}", stack1.getMin());
+        log.info("{}", stack1.pop());
+        log.info("{}", stack1.getMin());
 
         log.info("=============");
 
         MinStack2 stack2 = new MinStack2();
         stack2.push(3);
-        log.info(stack2.getMin());
+        log.info("{}", stack2.getMin());
         stack2.push(4);
-        log.info(stack2.getMin());
+        log.info("{}", stack2.getMin());
         stack2.push(1);
         stack2.push(1);
-        log.info(stack2.getMin());
-        log.info(stack2.pop());
-        log.info(stack2.getMin());
+        log.info("{}", stack2.getMin());
+        log.info("{}", stack2.pop());
+        log.info("{}", stack2.getMin());
     }
 }

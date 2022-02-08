@@ -1,11 +1,13 @@
 package learn.algorithm.sort.merge;
 
 import learn.algorithm.sort.SortTestUtils;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * 归并排序，从小到大
  * 让一个数组左边有序，再让一个数组右边有序，最后通过 merge 操作整体有序。
  */
+@Slf4j
 public class MergeSort {
 
     /**

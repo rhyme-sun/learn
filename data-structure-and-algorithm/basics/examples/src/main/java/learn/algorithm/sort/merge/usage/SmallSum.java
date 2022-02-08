@@ -1,6 +1,7 @@
 package learn.algorithm.sort.merge.usage;
 
 import learn.algorithm.sort.SortTestUtils;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * 求数组小和，数组小和：数组中的一个数左边比它小的数的总和，叫数的小和，所有数的小和累加起来，叫数组小和。
@@ -12,6 +13,7 @@ import learn.algorithm.sort.SortTestUtils;
  * 5 左边比 5 小的数：1、3、4、 2
  * 所以数组的小和为 1+1+3+1+1+3+4+2=16
  */
+@Slf4j
 public class SmallSum {
 
     /**
@@ -111,6 +113,6 @@ public class SmallSum {
         log.info(succeed ? "Nice!" : "Oops!");
         int[] arr = SortTestUtils.generateRandomArray(maxSize, maxValue);
         SortTestUtils.printArray(arr);
-        log.info(smallSum(arr));
+        log.info("{}", smallSum(arr));
     }
 }

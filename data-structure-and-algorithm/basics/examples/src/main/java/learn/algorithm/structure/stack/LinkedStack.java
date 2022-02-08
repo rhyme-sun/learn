@@ -13,7 +13,7 @@ public class LinkedStack {
 
     private Node top;
 
-    private int capacity;
+    private final int capacity;
     private int size;
 
     public LinkedStack(int initCapacity) {

@@ -141,6 +141,6 @@ public class CoverMax {
                 break;
             }
         }
-        log.info("Nice!");
+        log.info("Finish!");
     }
 }

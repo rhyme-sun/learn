@@ -1,10 +1,12 @@
 package learn.algorithm.sort.quick;
 
 import learn.algorithm.sort.SortTestUtils;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * 随机快排
  */
+@Slf4j
 public class QuickSort {
 
     static void quickSort1(int[] arr) {
