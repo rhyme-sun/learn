@@ -1,8 +1,8 @@
 # Java 编码规范
 
-编码规范可以让团队在编码风格上形成共识，统一的编码风格有利于代码在团队之间阅读和维护，减少沟通成本。这里罗列了简单的编码规范，并且提供了 checkstyle 配置文件。
+编码规范可以让团队在编码风格上形成共识，统一的编码风格有利于代码在团队之间阅读和维护，减少沟通成本。这里基于 Checkstyle 校验规则制定了编码规范，并且提供了对应的 Checkstyle 配置文件。
 
-规范的指定参考了：
+规范制定参考了：
 
 - [Blinkfox Java 编程风格指南](https://blinkfox.github.io/java-style/)；
 - [Apache ShenYu Code Conduct · Apache ShenYu](https://shenyu.apache.org/zh/community/code-conduct/)。
@@ -866,6 +866,8 @@ i++; // todo: do differently in future   // OK
 
 ## Checkstyle 配置文件
 
+下面给出 Checkstype 配置文件，配置文件的配置项顺序基本上和文档里罗列的规则是一直的，所以关于下面配置文件中各个配置项的含义可对照文档以了解其配置规则的含义，也可以点击文档中给出的配置项链接去详细了解，配置文件如下所示：
+
 ```xml
 <?xml version="1.0"?>
 
@@ -1122,6 +1124,8 @@ i++; // todo: do differently in future   // OK
 3. 在 IDEA 中点开 `CheckStyle` 窗口，选中之前添加的 checkstyle 配置，之后就可以对某个具体类、模块或项目进行检查了。
 
 ## 总结
+
+本文给出了基于 Checkstyle 校验项的编码规范，借助于 Checkstyle 插件，在编码过程中可以自动提示一些不符合编码规范的编码行为。CheckStyle 还有更多其它的校验项，这里使用的仅为其中一部分，项目可以基于本文提出的配置文件增加或减少配置项，约定好最适合自己编码规范。
 
 ### 参考链接
 
