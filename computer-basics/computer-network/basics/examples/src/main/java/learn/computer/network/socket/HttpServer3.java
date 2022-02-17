@@ -7,23 +7,25 @@ import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Objects;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * HttpServer1.
+ * HttpServer3（线程池优化）.
  */
 @Slf4j
-public class HttpServer1 {
+public class HttpServer3 {
 
     public static void main(String[] args) throws IOException {
-        ServerSocket server = new ServerSocket(8081, 10);
-
+        ServerSocket server = new ServerSocket(8083, 10);
+        final ExecutorService service = Executors.newFixedThreadPool(10);
         while (true) {
             // 线程会被阻塞在 accept 方法
             Socket client = server.accept();
             log.info("Client's port: {}", client.getPort());
-            service(client);
+            service.execute(() -> service(client));
         }
     }
 

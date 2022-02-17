@@ -11,19 +11,21 @@ import java.util.Objects;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * HttpServer1.
+ * HttpServer1（多线程优化）.
  */
 @Slf4j
-public class HttpServer1 {
+public class HttpServer2 {
 
     public static void main(String[] args) throws IOException {
-        ServerSocket server = new ServerSocket(8081, 10);
+        ServerSocket server = new ServerSocket(8082, 10);
 
         while (true) {
             // 线程会被阻塞在 accept 方法
             Socket client = server.accept();
             log.info("Client's port: {}", client.getPort());
-            service(client);
+            new Thread(() -> {
+                service(client);
+            }).start();
         }
     }
 
