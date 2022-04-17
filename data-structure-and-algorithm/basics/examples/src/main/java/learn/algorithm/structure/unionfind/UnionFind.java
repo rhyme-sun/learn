@@ -1,4 +1,4 @@
-package learn.algorithm.unionfind;
+package learn.algorithm.structure.unionfind;
 
 import java.util.HashMap;
 import java.util.List;

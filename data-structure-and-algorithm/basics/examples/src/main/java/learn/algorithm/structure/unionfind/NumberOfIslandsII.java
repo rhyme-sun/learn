@@ -1,10 +1,8 @@
-package learn.algorithm.unionfind;
+package learn.algorithm.structure.unionfind;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
-import learn.algorithm.comparator.MatrixComparator;
 
 /**
  * 岛问题升级版，对于 leetcode：https://leetcode.com/problems/number-of-islands-ii/

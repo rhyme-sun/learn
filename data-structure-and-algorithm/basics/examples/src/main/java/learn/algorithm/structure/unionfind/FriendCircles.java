@@ -1,4 +1,4 @@
-package learn.algorithm.unionfind;
+package learn.algorithm.structure.unionfind;
 
 /**
  * 朋友圈问题或省份问题，问题描述见：https://leetcode-cn.com/problems/number-of-provinces/
