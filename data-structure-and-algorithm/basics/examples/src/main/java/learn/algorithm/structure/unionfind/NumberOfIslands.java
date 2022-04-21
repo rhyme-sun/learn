@@ -239,7 +239,7 @@ public class NumberOfIslands {
 
         row = 1000;
         col = 1000;
-        board1 = MatrixComparator.generateRandomMatrix(row, col);
+        board1 = MatrixComparator.generateOneOrZeroRandomMatrix(row, col);
         board2 = MatrixComparator.copy(board1);
         board3 = MatrixComparator.copy(board1);
 
@@ -265,7 +265,7 @@ public class NumberOfIslands {
 
         row = 10000;
         col = 10000;
-        board1 = MatrixComparator.generateRandomMatrix(row, col);
+        board1 = MatrixComparator.generateOneOrZeroRandomMatrix(row, col);
         board3 = MatrixComparator.copy(board1);
         System.out.println("感染方法、并查集(数组实现)的运行结果和运行时间");
         System.out.println("随机生成的二维矩阵规模 : " + row + " * " + col);

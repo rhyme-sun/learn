@@ -1,6 +1,5 @@
 package learn.algorithm.greedy;
 
-import java.util.Arrays;
 import java.util.PriorityQueue;
 
 import learn.algorithm.comparator.ArrayComparator;
@@ -79,7 +78,7 @@ public class LessMoneySplitGold {
         int maxSize = 6;
         int maxValue = 100;
         for (int i = 0; i < testTimes; i++) {
-            int[] arr = ArrayComparator.generateRandomArray2(maxSize, maxValue);
+            int[] arr = ArrayComparator.generatePositiveRandomArray(maxSize, maxValue);
             final int i1 = lessMoney1(arr);
             final int i2 = lessMoney2(arr);
             if (i1 != i2) {

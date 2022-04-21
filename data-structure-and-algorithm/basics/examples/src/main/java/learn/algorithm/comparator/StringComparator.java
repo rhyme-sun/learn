@@ -6,6 +6,21 @@ package learn.algorithm.comparator;
 public class StringComparator {
 
     /**
+     * 生成一个随机字符串，指包含数字字符
+     *
+     * @param strLen 随机字符串的最大长度
+     * @return 随机字符串
+     */
+    public static String generateRandomDigitString(int strLen) {
+        char[] str = new char[strLen];
+        for (int i = 0; i < strLen; i++) {
+            str[i] = (char) ((int) (Math.random() * 10) + '0');
+        }
+        return String.valueOf(str);
+    }
+
+
+    /**
      * 生成一个随机字符串
      *
      * @param strLen 随机字符串的最大长度
