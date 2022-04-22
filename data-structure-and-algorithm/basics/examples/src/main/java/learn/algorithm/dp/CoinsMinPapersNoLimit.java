@@ -7,7 +7,7 @@ import learn.algorithm.comparator.ArrayComparator;
  * arr 是面值数组，其中的值都是正数且没有重复。再给定一个正数 aim。每个值都认为是一种面值，且认为张数是无限的。返回组成 aim 的最少货币数量。
  * 比如有 arr=[1,2,5,10]，aim=1000，那么组成 aim 需要最少货币张数为 100（都选 10 面值的货币
  */
-public class MinCoinsNoLimit {
+public class CoinsMinPapersNoLimit {
 
     /**
      * 递归尝试
@@ -21,9 +21,9 @@ public class MinCoinsNoLimit {
 
     /**
      * 考虑 index 及之后的面值，每种面值张数自由选择，还剩 rest，返回最小张数
-     * 使用 Integer.MAX_VALUE 标记无效值
+     *
      */
-    public static int process(int[] arr, int index, int rest) {
+    private static int process(int[] arr, int index, int rest) {
         if (index == arr.length) {
             return rest == 0 ? 0 : Integer.MAX_VALUE;
         } else {
