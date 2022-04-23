@@ -1,4 +1,4 @@
-package learn.algorithm.slidingwindow;
+package learn.algorithm.structure.slidingwindow;
 
 import java.util.Arrays;
 import java.util.LinkedList;
