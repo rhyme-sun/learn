@@ -57,6 +57,23 @@ public class ArrayComparator {
     }
 
     /**
+     * 生成随机数组，数组中无重复值
+     */
+    public static int[] generateNoRepeatRandomArray(int size) {
+        int[] arr = new int[(int) (Math.random() * size) + 1];
+        for (int i = 0; i < arr.length; i++) {
+            arr[i] = i;
+        }
+        for (int i = 0; i < arr.length; i++) {
+            int swapIndex = (int) (Math.random() * arr.length);
+            int tmp = arr[swapIndex];
+            arr[swapIndex] = arr[i];
+            arr[i] = tmp;
+        }
+        return arr;
+    }
+
+    /**
      * 拷贝数组
      */
     public static int[] copyArray(int[] arr) {
@@ -67,16 +84,31 @@ public class ArrayComparator {
     }
 
     /**
-     * 判断两个数组是否相等
+     * 判断两个一维数组是否相等
      */
     public static boolean isEqual(int[] arr1, int[] arr2) {
         return Arrays.equals(arr1, arr2);
     }
 
+
     /**
-     * 打印数组
+     * 判断两个二维数组是否相等
+     */
+    public static boolean isEqual(int[][] arr1, int[][] arr2) {
+        return Arrays.deepEquals(arr1, arr2);
+    }
+
+    /**
+     * 打印一维数组
      */
     public static void printArray(int[] arr) {
         log.info(Arrays.toString(arr));
+    }
+
+    /**
+     * 打印二维数组
+     */
+    public static void printArray(int[][] arr) {
+        log.info(Arrays.deepToString(arr));
     }
 }
