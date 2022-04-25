@@ -19,6 +19,20 @@ public class StringComparator {
         return String.valueOf(str);
     }
 
+    /**
+     * 生成一个随机字符串
+     *
+     * @param possibilities 控制随机字符的范围
+     * @param strLen        生成字符串的最大长度
+     * @return 随机字符串
+     */
+    public static String generateRandomString(int possibilities, int strLen) {
+        char[] ans = new char[(int) (Math.random() * strLen) + 1];
+        for (int i = 0; i < ans.length; i++) {
+            ans[i] = (char) ((int) (Math.random() * possibilities) + 'a');
+        }
+        return String.valueOf(ans);
+    }
 
     /**
      * 生成一个随机字符串
