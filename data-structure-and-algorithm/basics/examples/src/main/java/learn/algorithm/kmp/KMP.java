@@ -93,13 +93,14 @@ public class KMP {
     }
 
     public static void main(String[] args) {
+        int possibilities = 5;
         int strLen = 20;
         int matchLen = 5;
         int testTimes = 100000;
 
         for (int i = 0; i < testTimes; i++) {
-            final String str = StringComparator.generateRandomString(strLen);
-            final String match = StringComparator.generateRandomString(matchLen);
+            final String str = StringComparator.generateRandomString(possibilities, strLen);
+            final String match = StringComparator.generateRandomString(possibilities, matchLen);
             int ans1 = indexOf(str, match);
             int ans2 = str.indexOf(match);
             int ans3 = getIndexOf(str, match);
