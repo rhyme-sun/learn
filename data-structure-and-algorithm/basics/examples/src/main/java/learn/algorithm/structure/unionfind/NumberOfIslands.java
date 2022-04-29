@@ -215,7 +215,7 @@ public class NumberOfIslands {
     }
 
     /**
-     * 感染操作，从 (i,j) 这个位置出发，把所有练成一片的 '1'字符，变成 0
+     * 感染操作，从 (i,j) 这个位置出发，把所有连成一片的 '1' 字符，变成数字 0
      */
     private static void infect(char[][] board, int i, int j) {
         if (i < 0 || i == board.length || j < 0 || j == board[i].length || board[i][j] != '1') {
