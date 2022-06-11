@@ -1,18 +1,20 @@
 package learn.algorithm.structure.segmenttree;
 
 /**
- *
+ * 线段树
  */
 public class SegmentTree {
 
-
-    private int MAXN;
     /**
-     * 存放原始数组元素，下标从 1 开始
+     * 线段树原始数据数组长度
+     */
+    int n;
+    /**
+     * 用来存放原始数组数据，下标从 1 开始
      */
     private int[] arr;
     /**
-     * 区间累加和数组，模拟线段树，维护累加和
+     * 表示线段树的每个节点，存放的节点对应数组区间的累加和
      */
     private int[] sum;
     /**
@@ -30,26 +32,35 @@ public class SegmentTree {
     private boolean[] update;
 
     public SegmentTree(int[] origin) {
-        MAXN = origin.length + 1;
-        // 从 1 开始使用
-        arr = new int[MAXN];
-        for (int i = 1; i < MAXN; i++) {
+        // 线段树的下标从 1 开始，所以这里要将长度加 1
+        n = origin.length + 1;
+        arr = new int[n];
+        for (int i = 1; i < n; i++) {
             arr[i] = origin[i - 1];
         }
-        sum = new int[MAXN << 2]; // 用来支持脑补概念中，某一个范围的累加和信息
-        lazy = new int[MAXN << 2]; // 用来支持脑补概念中，某一个范围沒有往下傳遞的纍加任務
-        change = new int[MAXN << 2]; // 用来支持脑补概念中，某一个范围有没有更新操作的任务
-        update = new boolean[MAXN << 2]; // 用来支持脑补概念中，某一个范围更新任务，更新成了什么
+        // 用来支持脑补概念中，某一个范围的累加和信息
+        sum = new int[n << 2];
+        // 用来支持脑补概念中，某一个范围沒有往下传递的累加任务
+        lazy = new int[n << 2];
+        // 用来支持脑补概念中，某一个范围有没有更新操作的任务
+        change = new int[n << 2];
+        // 用来支持脑补概念中，某一个范围更新任务，更新成了什么
+        update = new boolean[n << 2];
+    }
+
+    public void build() {
+        // 使用 arr 数组构建线段树，区间范围为 [1~N]，左闭右闭，N 表示 arr 数组中最后一个元素的下标
+        // 从线段树的根节点从上往下构建（rt=1）
+        build(1, n - 1, 1);
     }
 
     /**
-     * 构建线段树
-     *
-     * @param l  线段区间左范围
-     * @param r  线段区间右范围
-     * @param rt 区间范围在 sum[] 中的下标
+     * @param l  线段节点代表区间左范围
+     * @param r  线段节点代表区间右范围
+     * @param rt 当前区间 [l,r] 对应线段树节点在 sum[] 数组中的位置（下标），
+     *           和 l 和 r 合起来表示线段树上的一个节点信息
      */
-    public void build(int l, int r, int rt) {
+    private void build(int l, int r, int rt) {
         if (l == r) {
             sum[rt] = arr[l];
             return;
@@ -61,6 +72,18 @@ public class SegmentTree {
     }
 
     /**
+     * 区间增加
+     *
+     * @param l 区间左边界
+     * @param r 区间右边界
+     * @param c 增加的值
+     */
+    public void add(int l, int r, int c) {
+        // 从根节点开始考察，下发增加任务
+        add(l, r, c, 1, n - 1, 1);
+    }
+
+    /**
      * 将原数组 L~R 范围内数增加 C。
      *
      * @param L  增加数组的左边界
@@ -68,18 +91,19 @@ public class SegmentTree {
      * @param C  增加的值
      * @param l  线段区间左范围
      * @param r  线段区间右范围
-     * @param rt 区间范围在数组中的下标
+     * @param rt 当前区间 [l,r] 对应线段树节点在 sum[] 数组中的位置（下标），
+     *           和 l 和 r 合起来表示线段树上的一个节点信息
      */
-    public void add(int L, int R, int C, int l, int r, int rt) {
+    private void add(int L, int R, int C, int l, int r, int rt) {
         // L <= l~r <= R
-        // 任务如果把此时的范围全包了，在此范围收集信息，下级节点暂不下发
+        // 任务区间如果包含了当前的节点区间，在此范围收集信息，绝不会做任务之外的工作，下级节点暂不下发
         // 包住不下发，是线段树在范围新增能够达到 O(logN) 的本质
         if (L <= l && r <= R) {
             sum[rt] += C * (r - l + 1);
             lazy[rt] += C;
             return;
         }
-        // 任务没有把你全包，拆分区间，分配任务，以前被包住没有下发的旧任务要先下发一级
+        // 任务包不住节点区间，拆分区间，分配任务，以前被包住没有下发的旧任务要先下发一级
         int mid = (l + r) >> 1;
         // 下发旧任务信息
         pushDown(rt, mid - l + 1, r - mid);
@@ -90,9 +114,105 @@ public class SegmentTree {
         if (R > mid) {
             add(L, R, C, mid + 1, r, rt << 1 | 1);
         }
+        // 将字节的增加状态同步奥父节点
         pushUp(rt);
     }
 
+    /**
+     * 区间更新
+     *
+     * @param l 区间左边界
+     * @param r 区间右边界
+     * @param c 修改的值
+     */
+    public void update(int l, int r, int c) {
+        // 从根节点开始考察，下发更新任务
+        update(l, r, c, 1, n - 1, 1);
+    }
+
+    /**
+     * 在 L~R 范围内将所有元素的值变为 C
+     *
+     * @param L  增加数组的左边界
+     * @param R  增加数组的右边界
+     * @param C  增加的值
+     * @param l  线段区间左范围
+     * @param r  线段区间右范围
+     * @param rt 区间范围在数组中的下标
+     */
+    private void update(int L, int R, int C, int l, int r, int rt) {
+        // 全包了，更新范围边界
+        if (L <= l && r <= R) {
+            update[rt] = true;
+            change[rt] = C;
+            sum[rt] = C * (r - l + 1);
+            lazy[rt] = 0;
+            return;
+        }
+        // 包不住，先下发
+        int mid = (l + r) >> 1;
+        pushDown(rt, mid - l + 1, r - mid);
+        if (L <= mid) {
+            update(L, R, C, l, mid, rt << 1);
+        }
+        if (R > mid) {
+            update(L, R, C, mid + 1, r, rt << 1 | 1);
+        }
+        // 将子节点更新状态同步到父节点
+        pushUp(rt);
+    }
+
+    /**
+     * 将 index 位置的更新为 c
+     *
+     * @param index 更新位置
+     * @param c     增加的值
+     */
+    public void change(int index, int c) {
+        update(index, index, c);
+    }
+
+    /**
+     * 区间求和
+     *
+     * @param l 区间左边界
+     * @param r 区间右边界
+     * @return [l,r] 区间累加和
+     */
+    public int query(int l, int r) {
+        return query(l, r, 1, n-1, 1);
+    }
+
+    /**
+     * 查询 L~R 范围累加和
+     *
+     * @param L  增加数组的左边界
+     * @param R  增加数组的右边界
+     * @param l  线段区间左范围
+     * @param r  线段区间右范围
+     * @param rt 区间范围在数组中的下标
+     */
+    private int query(int L, int R, int l, int r, int rt) {
+        if (L <= l && r <= R) {
+            return sum[rt];
+        }
+        int mid = (l + r) >> 1;
+        pushDown(rt, mid - l + 1, r - mid);
+        int ans = 0;
+        if (L <= mid) {
+            ans += query(L, R, l, mid, rt << 1);
+        }
+        if (R > mid) {
+            ans += query(L, R, mid + 1, r, rt << 1 | 1);
+        }
+        return ans;
+    }
+
+    /**
+     * 用子节点对应的值构建父节点
+     *
+     * @param rt 父节点在 sum[] 数组中的位置
+     */
     private void pushUp(int rt) {
         sum[rt] = sum[rt << 1] + sum[rt << 1 | 1];
     }
@@ -119,84 +239,16 @@ public class SegmentTree {
         // 懒信息下发一层
         if (lazy[rt] != 0) {
             lazy[rt << 1] += lazy[rt];
-            sum[rt << 1] += lazy[rt] * ln;
             lazy[rt << 1 | 1] += lazy[rt];
+            sum[rt << 1] += lazy[rt] * ln;
             sum[rt << 1 | 1] += lazy[rt] * rn;
             lazy[rt] = 0;
         }
     }
 
-    /**
-     * 在 L~R 范围内将所有元素的值变为 C
-     *
-     * @param L  增加数组的左边界
-     * @param R  增加数组的右边界
-     * @param C  增加的值
-     * @param l  线段区间左范围
-     * @param r  线段区间右范围
-     * @param rt 区间范围在数组中的下标
-     */
-    public void update(int L, int R, int C, int l, int r, int rt) {
-        // 全包了，更新范围边界
-        if (L <= l && r <= R) {
-            update[rt] = true;
-            change[rt] = C;
-            sum[rt] = C * (r - l + 1);
-            lazy[rt] = 0;
-            return;
-        }
-        // 当前任务躲不掉，无法懒更新，要往下发
-        int mid = (l + r) >> 1;
-        pushDown(rt, mid - l + 1, r - mid);
-        if (L <= mid) {
-            update(L, R, C, l, mid, rt << 1);
-        }
-        if (R > mid) {
-            update(L, R, C, mid + 1, r, rt << 1 | 1);
-        }
-        pushUp(rt);
-    }
-
-    /**
-     * 将 index 位置的更新为 C
-     *
-     * @param index 更新位置
-     * @param C     增加的值
-     * @param l     线段区间左范围
-     * @param r     线段区间右范围
-     * @param rt    区间范围在数组中的下标
-     */
-    public void change(int index, int C, int l, int r, int rt) {
-        update(index, index, C, l, r, rt);
-    }
-
-    /**
-     * 查询 L~R 范围累加和
-     *
-     * @param L  增加数组的左边界
-     * @param R  增加数组的右边界
-     * @param l  线段区间左范围
-     * @param r  线段区间右范围
-     * @param rt 区间范围在数组中的下标
-     */
-    public long query(int L, int R, int l, int r, int rt) {
-        if (L <= l && r <= R) {
-            return sum[rt];
-        }
-        int mid = (l + r) >> 1;
-        pushDown(rt, mid - l + 1, r - mid);
-        long ans = 0;
-        if (L <= mid) {
-            ans += query(L, R, l, mid, rt << 1);
-        }
-        if (R > mid) {
-            ans += query(L, R, mid + 1, r, rt << 1 | 1);
-        }
-        return ans;
-    }
-
     // for test
     static class Right {
+
         public int[] arr;
 
         public Right(int[] origin) {
@@ -234,26 +286,20 @@ public class SegmentTree {
     public static void main(String[] args) {
         int[] origin = {2, 1, 1, 2, 3, 4, 5};
         SegmentTree seg = new SegmentTree(origin);
-        int S = 1; // 整个区间的开始位置，规定从1开始，不从 0 开始 -> 固定
-        int N = origin.length; // 整个区间的结束位置，规定能到N，不是 N-1 -> 固定
-        int root = 1; // 整棵树的头节点位置，规定是 1，不是 0 -> 固定
-        int L = 2; // 操作区间的开始位置 -> 可变
-        int R = 5; // 操作区间的结束位置 -> 可变
-        int C = 4; // 要加的数字或者要更新的数字 -> 可变
-        // 区间生成，必须在 [S,N] 整个范围上 build
-        seg.build(S, N, root);
-        // 区间修改，可以改变L、R和C的值，其他值不可改变
-        seg.add(L, R, C, S, N, root);
-        // 区间更新，可以改变L、R和C的值，其他值不可改变
-        seg.update(L, R, C, S, N, root);
-        // 区间查询，可以改变L和R的值，其他值不可改变
-        long sum = seg.query(L, R, S, N, root);
+        int l = 2;
+        int r = 5;
+        int c = 4;
+        seg.build();
+        seg.add(l, r, c);
+        seg.update(l, r, c);
 
+        int sum = seg.query(l, r);
         System.out.println(sum);
-        System.out.println("测试结果 : " + (test() ? "通过" : "未通过"));
+
+        test();
     }
 
-    private static boolean test() {
+    private static void test() {
         int len = 100;
         int max = 1000;
         int testTimes = 5000;
@@ -262,41 +308,42 @@ public class SegmentTree {
         for (int i = 0; i < testTimes; i++) {
             int[] origin = generateRandomArray(len, max);
             SegmentTree seg = new SegmentTree(origin);
-            int S = 1;
             int N = origin.length;
-            int root = 1;
-            seg.build(S, N, root);
+            seg.build();
             Right rig = new Right(origin);
             for (int j = 0; j < addOrUpdateTimes; j++) {
                 int num1 = (int) (Math.random() * N) + 1;
                 int num2 = (int) (Math.random() * N) + 1;
-                int L = Math.min(num1, num2);
-                int R = Math.max(num1, num2);
-                int C = (int) (Math.random() * max) - (int) (Math.random() * max);
+                int l = Math.min(num1, num2);
+                int r = Math.max(num1, num2);
+                int c = (int) (Math.random() * max) - (int) (Math.random() * max);
                 if (Math.random() < 0.4) {
-                    seg.add(L, R, C, S, N, root);
-                    rig.add(L, R, C);
+                    seg.add(l, r, c);
+                    rig.add(l, r, c);
                 } else if (Math.random() < 0.7) {
-                    seg.update(L, R, C, S, N, root);
-                    rig.update(L, R, C);
+                    seg.update(l, r, c);
+                    rig.update(l, r, c);
                 } else {
-                    seg.change(L, C, S, N, root);
-                    rig.change(L, C);
+                    seg.change(l, c);
+                    rig.change(l, c);
                 }
             }
             for (int k = 0; k < queryTimes; k++) {
                 int num1 = (int) (Math.random() * N) + 1;
                 int num2 = (int) (Math.random() * N) + 1;
-                int L = Math.min(num1, num2);
-                int R = Math.max(num1, num2);
-                long ans1 = seg.query(L, R, S, N, root);
-                long ans2 = rig.query(L, R);
+                int l = Math.min(num1, num2);
+                int r = Math.max(num1, num2);
+                long ans1 = seg.query(l, r);
+                long ans2 = rig.query(l, r);
                 if (ans1 != ans2) {
-                    return false;
+                    System.out.println("Oops!");
+                    System.out.println(ans1);
+                    System.out.println(ans2);
+                    break;
                 }
             }
         }
-        return true;
+        System.out.println("Finish!");
     }
 
     private static int[] generateRandomArray(int len, int max) {

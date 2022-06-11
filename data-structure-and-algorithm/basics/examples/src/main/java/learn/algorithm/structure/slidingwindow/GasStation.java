@@ -1,6 +1,7 @@
 package learn.algorithm.structure.slidingwindow;
 
 import java.util.Arrays;
+import java.util.Deque;
 import java.util.LinkedList;
 
 /**
@@ -56,17 +57,17 @@ public class GasStation {
                 curGas = (curGas - nextCost) + gas[j];
                 nextCost = cost[j];
             }
-            // 下面两句是优化点
+            // 下面两句是剪枝策略
             // *************
             //  j i
             // 假设我们从加油站 i 位置开始走，走到了上述 j 位置（j<i）
-            // i 到 j 之间的位置不用讨论，下面已经证明，而 j 到 i 之间的问题已经讨论过，因此此时就可以跳出整个迭代
+            // i 到 j 之间的位置不用讨论，下面已经证明，而 j 到 i 之间的问题已经讨论过，因此此时就可以跳出整个循环
             if (j < i) {
                 return goodArray;
             }
             // *************
             //    i    j
-            // 我们只能从加油站 i 走到加油站 j
+            // 我们只能从加油站 i 走到加油站 j（j>i）
             // 那么从 i 和 j 之间的加油站出发，一定不会走完一圈
             // 为什么，可以使用反证法
             // 如果假设 i 和 j 中间的位置可以走完一圈，那么从 i+1 位置一定能够走到 j+1，i 又能走到 i+1，所以从 i 位置能够 j+1，这与我们的
@@ -92,7 +93,7 @@ public class GasStation {
         for (int i = 1; i < m; i++) {
             arr[i] += arr[i - 1];
         }
-        LinkedList<Integer> w = new LinkedList<>();
+        Deque<Integer> w = new LinkedList<>();
         for (int i = 0; i < n; i++) {
             while (!w.isEmpty() && arr[w.peekLast()] >= arr[i]) {
                 w.pollLast();

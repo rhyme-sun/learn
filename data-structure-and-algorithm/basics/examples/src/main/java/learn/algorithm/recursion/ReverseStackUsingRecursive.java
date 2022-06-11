@@ -20,7 +20,7 @@ public class ReverseStackUsingRecursive {
     }
 
     /**
-     * 移除栈地元素并返回，上面的元素盖下来
+     * 移除栈底元素并返回，上面的元素盖下来
      */
     private static int f(Stack<Integer> stack) {
         int result = stack.pop();
@@ -34,7 +34,7 @@ public class ReverseStackUsingRecursive {
     }
 
     public static void main(String[] args) {
-        Stack<Integer> test = new Stack<Integer>();
+        Stack<Integer> test = new Stack<>();
         test.push(1);
         test.push(2);
         test.push(3);

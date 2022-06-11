@@ -25,17 +25,17 @@ public class UnRecursiveTraversalBT {
 		System.out.println();
 	}
 
-	public static void in(Node cur) {
-		if (cur != null) {
+	public static void in(Node head) {
+		if (head != null) {
 			Stack<Node> stack = new Stack<>();
-			while (!stack.isEmpty() || cur != null) {
-				if (cur != null) {
-					stack.push(cur);
-					cur = cur.left;
+			while (!stack.isEmpty() || head != null) {
+				if (head != null) {
+					stack.push(head);
+					head = head.left;
 				} else {
-					cur = stack.pop();
-					System.out.print(cur.value + " ");
-					cur = cur.right;
+					head = stack.pop();
+					System.out.print(head.value + " ");
+					head = head.right;
 				}
 			}
 		}

@@ -10,12 +10,15 @@ import learn.algorithm.structure.tree.Node;
 public class IsBalancedBinaryTree {
 
     /**
-     * 方法 1
+     * 方法 1，深度优先遍历
      */
-    static boolean isBalanced1(Node head) {
+    static boolean isBalanced1(Node root) {
+        if (root == null) {
+            return true;
+        }
         boolean[] ans = new boolean[1];
         ans[0] = true;
-        process1(head, ans);
+        process1(root, ans);
         return ans[0];
     }
 
@@ -32,49 +35,40 @@ public class IsBalancedBinaryTree {
     }
 
     /**
-     * 方法 2
+     * 方法 2，递归套路
      */
-    static boolean isBalanced2(Node head) {
-        return process(head).isBalanced;
+    static boolean isBalanced2(Node root) {
+        if (root == null) {
+            return true;
+        }
+        return process(root).isBalanced;
+    }
+
+    private static Info process(Node head) {
+        if (head == null) {
+            return new Info(true, 0);
+        }
+        Info leftInfo = process(head.left);
+        Info rightInfo = process(head.right);
+        int height = Math.max(leftInfo.height, rightInfo.height) + 1;
+        boolean isBalanced = false;
+        if (leftInfo.isBalanced && rightInfo.isBalanced && Math.abs(leftInfo.height - rightInfo.height) <= 1) {
+            isBalanced = true;
+        }
+        return new Info(isBalanced, height);
     }
 
     /**
      * 某个节点 x 的子树信息，用来存放某棵子树是否平衡和高度信息，辅助判断整个二叉树是否为平衡二叉树
      */
-    static class Info {
-        /**
-         * 子树是否平衡
-         */
+    private static class Info {
         boolean isBalanced;
-        /**
-         * 子树的高度
-         */
         int height;
 
         public Info(boolean i, int h) {
             isBalanced = i;
             height = h;
         }
-    }
-
-    private static Info process(Node x) {
-        if (x == null) {
-            return new Info(true, 0);
-        }
-        Info leftInfo = process(x.left);
-        Info rightInfo = process(x.right);
-        int height = Math.max(leftInfo.height, rightInfo.height) + 1;
-        boolean isBalanced = true;
-        if (!leftInfo.isBalanced) {
-            isBalanced = false;
-        }
-        if (!rightInfo.isBalanced) {
-            isBalanced = false;
-        }
-        if (Math.abs(leftInfo.height - rightInfo.height) > 1) {
-            isBalanced = false;
-        }
-        return new Info(isBalanced, height);
     }
 
     public static void main(String[] args) {
@@ -85,6 +79,7 @@ public class IsBalancedBinaryTree {
             Node head = BinaryTreeComparator.generateRandomBinaryTree(maxLevel, maxValue);
             if (isBalanced1(head) != isBalanced2(head)) {
                 System.out.println("Oops!");
+                break;
             }
         }
         System.out.println("finish!");

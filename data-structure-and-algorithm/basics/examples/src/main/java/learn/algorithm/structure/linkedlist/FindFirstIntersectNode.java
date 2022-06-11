@@ -1,7 +1,5 @@
 package learn.algorithm.structure.linkedlist;
 
-import java.util.HashSet;
-
 /**
  * 判断两个链表是否相交，如果相交，请返回相交的 第一个节点，如果不相交，返回 null。
  */

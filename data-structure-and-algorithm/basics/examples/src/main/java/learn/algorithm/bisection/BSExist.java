@@ -15,7 +15,8 @@ public class BSExist {
         }
         int l = 0;
         int r = sortedArr.length - 1;
-        while (l < r) {
+        int index = -1;
+        while (l <= r) {
             // mid = (l + r) / 2
             // 使用右移运算而不是除法运算，是因为右移运算更快
             // l + ((r - l) >> 1) 而不是 (l + r) >> 1 是为了避免超过 int 的最大值
@@ -28,7 +29,7 @@ public class BSExist {
                 l = mid + 1;
             }
         }
-        return sortedArr[l] == num ? l : -1;
+        return index;
     }
 
     public static void main(String[] args) {

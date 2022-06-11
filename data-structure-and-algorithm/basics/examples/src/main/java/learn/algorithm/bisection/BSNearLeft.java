@@ -18,6 +18,7 @@ public class BSNearLeft {
         int index = -1;
         while (l <= r) {
             int mid = l + ((r - l) >> 1);
+            // index 来到最后一个大于等于 num 的 mid 位置
             if (array[mid] >= num) {
                 index = mid;
                 r = mid - 1;
@@ -32,6 +33,6 @@ public class BSNearLeft {
         int[] array = SortTestUtils.generateRandomArray(10, 10);
         SortTestUtils.comparator(array);
         SortTestUtils.printArray(array);
-        log.info("数组中大于 0 的最左位置为：{}", nearLeft(array, 0));
+        log.info("数组中大于等于 0 的最左位置为：{}", nearLeft(array, 0));
     }
 }

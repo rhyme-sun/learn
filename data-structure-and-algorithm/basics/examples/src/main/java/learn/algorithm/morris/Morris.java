@@ -34,10 +34,10 @@ public class Morris {
                 while (mostRight.right != null && mostRight.right != cur) {
                     mostRight = mostRight.right;
                 }
-                if (mostRight.right == null) {
+                if (mostRight.right == null) { // 第一次遍历到 cur
                     mostRight.right = cur;
                     cur = cur.left;
-                } else {
+                } else { // 第二次遍历到 cur
                     mostRight.right = null;
                     cur = cur.right;
                 }

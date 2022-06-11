@@ -18,6 +18,7 @@ public class BSNearRight {
         int index = -1;
         while (l <= r) {
             int mid = l + ((r - l) >> 1);
+            // index 来到最后一个小于等于 num 的 mid 位置
             if (array[mid] <= num) {
                 index = mid;
                 l = mid + 1;
@@ -34,6 +35,6 @@ public class BSNearRight {
         // 升序排序
         SortTestUtils.comparator(array);
         SortTestUtils.printArray(array);
-        log.info("数组中大小于 0 最右侧的位置为：{}", nearRight(array, 0));
+        log.info("数组中小于等于 0 最右侧的位置为：{}", nearRight(array, 0));
     }
 }

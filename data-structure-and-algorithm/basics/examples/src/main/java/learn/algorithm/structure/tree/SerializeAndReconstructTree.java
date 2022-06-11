@@ -11,14 +11,17 @@ import java.util.Stack;
  * 但是，二叉树无法通过中序遍历的方式实现序列化和反序列化
  * 因为不同的两棵树，可能得到同样的中序序列，即便补了空位置也可能一样。
  * 比如下两棵树
- *         __2
- *        /
- *       1
+ *         __2                      __2__
+ *        /       -补 null->       /     \
+ *       1                       1       null
+ *                              / \
+ *                           null null
  *
- *
- *       1__
- *          \
- *           2
+ *       1__                       __1__
+ *          \     -补 null->      /      \
+ *           2                  null     2
+ *                                      / \
+ *                                   null null
  * 补足空位置的中序遍历结果都是 {null, 1, null, 2, null}
  */
 public class SerializeAndReconstructTree {

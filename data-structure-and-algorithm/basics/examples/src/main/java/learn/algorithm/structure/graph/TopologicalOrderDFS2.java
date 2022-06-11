@@ -6,49 +6,9 @@ import java.util.HashMap;
 
 /**
  * 题目链接：https://www.lintcode.com/problem/127/
- * 拓扑排序，基于点次（深度优先遍历思想）
+ * 拓扑排序，基于节点的最大深度（深度优先遍历思想）
  */
 public class TopologicalOrderDFS2 {
-
-    /**
-     * 图的节点结构
-     */
-    static class DirectedGraphNode {
-        public int label;
-        public ArrayList<DirectedGraphNode> neighbors;
-
-        public DirectedGraphNode(int x) {
-            label = x;
-            neighbors = new ArrayList<>();
-        }
-    }
-
-    /**
-     * 记录节点和节点的点次
-     */
-    static class Record {
-        /**
-         * 图节点
-         */
-        public DirectedGraphNode node;
-        /**
-         * 图节点的点次
-         */
-        public long nodes;
-
-        public Record(DirectedGraphNode n, long o) {
-            node = n;
-            nodes = o;
-        }
-    }
-
-    static class MyComparator implements Comparator<Record> {
-
-        @Override
-        public int compare(Record o1, Record o2) {
-            return o1.nodes == o2.nodes ? 0 : (o1.nodes > o2.nodes ? -1 : 1);
-        }
-    }
 
     static ArrayList<DirectedGraphNode> topSort(ArrayList<DirectedGraphNode> graph) {
         HashMap<DirectedGraphNode, Record> order = new HashMap<>();
@@ -60,7 +20,7 @@ public class TopologicalOrderDFS2 {
             recordArr.add(r);
         }
         recordArr.sort(new MyComparator());
-        ArrayList<DirectedGraphNode> ans = new ArrayList<>();
+        ArrayList<DirectedGraphNode> ans = new ArrayList<DirectedGraphNode>();
         for (Record r : recordArr) {
             ans.add(r.node);
         }
@@ -68,21 +28,46 @@ public class TopologicalOrderDFS2 {
     }
 
     /**
-     * 当前来到 cur点，请返回 cur 点所到之处，所有的点次
-     *
-     * @param cur
-     * @param order 点次缓存，key 为节点，value 节点对于点次
+     * 求节点最大深度
      */
     private static Record f(DirectedGraphNode cur, HashMap<DirectedGraphNode, Record> order) {
         if (order.containsKey(cur)) {
             return order.get(cur);
         }
-        long nodes = 0;
+        int follow = 0;
         for (DirectedGraphNode next : cur.neighbors) {
-            nodes += f(next, order).nodes;
+            follow = Math.max(follow, f(next, order).deep);
         }
-        Record ans = new Record(cur, nodes + 1);
+        Record ans = new Record(cur, follow + 1);
         order.put(cur, ans);
         return ans;
+    }
+
+    static class Record {
+        public DirectedGraphNode node;
+        public int deep;
+
+        public Record(DirectedGraphNode n, int o) {
+            node = n;
+            deep = o;
+        }
+    }
+
+    static class MyComparator implements Comparator<Record> {
+
+        @Override
+        public int compare(Record o1, Record o2) {
+            return -(o1.deep - o2.deep);
+        }
+    }
+
+    private static class DirectedGraphNode {
+        public int label;
+        public ArrayList<DirectedGraphNode> neighbors;
+
+        public DirectedGraphNode(int x) {
+            label = x;
+            neighbors = new ArrayList<DirectedGraphNode>();
+        }
     }
 }

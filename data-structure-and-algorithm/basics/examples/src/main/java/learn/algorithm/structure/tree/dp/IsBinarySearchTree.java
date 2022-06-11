@@ -1,6 +1,8 @@
 package learn.algorithm.structure.tree.dp;
 
+import javax.swing.tree.TreeNode;
 import java.util.ArrayList;
+import java.util.List;
 
 import learn.algorithm.comparator.BinaryTreeComparator;
 import learn.algorithm.structure.tree.Node;
@@ -21,22 +23,22 @@ public class IsBinarySearchTree {
         if (head == null) {
             return true;
         }
-        ArrayList<Node> arr = new ArrayList<>();
+        List<Integer> arr = new ArrayList<>();
         in(head, arr);
         for (int i = 1; i < arr.size(); i++) {
-            if (arr.get(i).value <= arr.get(i - 1).value) {
+            if (arr.get(i - 1) >= arr.get(i)) {
                 return false;
             }
         }
         return true;
     }
 
-    private static void in(Node head, ArrayList<Node> arr) {
+    private static void in(Node head, List<Integer> arr) {
         if (head == null) {
             return;
         }
         in(head.left, arr);
-        arr.add(head);
+        arr.add(head.value);
         in(head.right, arr);
     }
 
@@ -50,21 +52,24 @@ public class IsBinarySearchTree {
         return process(head).isBST;
     }
 
+    private static Info process(Node head) {
+        if (head == null) {
+            return new Info(true, Integer.MIN_VALUE, Integer.MAX_VALUE);
+        }
+        Info leftInfo = process(head.left);
+        Info rightInfo = process(head.right);
+        boolean isBST = head.value > leftInfo.max && head.value < rightInfo.min;
+        int min = Math.min(head.value, Math.min(leftInfo.min, rightInfo.min));
+        int max = Math.max(head.value, Math.max(leftInfo.max, rightInfo.max));
+        return new Info(isBST && leftInfo.isBST && rightInfo.isBST, max, min);
+    }
+
     /**
      * 某个节点 x 的子树信息，辅助判断整个二叉树是否为二叉搜索树
      */
-    static class Info {
-        /**
-         * 子树是否为搜索二叉树
-         */
+    private static class Info {
         boolean isBST;
-        /**
-         * 子树中节点的最大值
-         */
         int max;
-        /**
-         * 子树节点中的最小值
-         */
         int min;
 
         public Info(boolean i, int ma, int mi) {
@@ -74,54 +79,19 @@ public class IsBinarySearchTree {
         }
     }
 
-    private static Info process(Node x) {
-        if (x == null) {
-            return null;
-        }
-        Info leftInfo = process(x.left);
-        Info rightInfo = process(x.right);
-        int max = x.value;
-        if (leftInfo != null) {
-            max = Math.max(max, leftInfo.max);
-        }
-        if (rightInfo != null) {
-            max = Math.max(max, rightInfo.max);
-        }
-        int min = x.value;
-        if (leftInfo != null) {
-            min = Math.min(min, leftInfo.min);
-        }
-        if (rightInfo != null) {
-            min = Math.min(min, rightInfo.min);
-        }
-        boolean isBST = true;
-        if (leftInfo != null && !leftInfo.isBST) {
-            isBST = false;
-        }
-        if (rightInfo != null && !rightInfo.isBST) {
-            isBST = false;
-        }
-        if (leftInfo != null && leftInfo.max >= x.value) {
-            isBST = false;
-        }
-        if (rightInfo != null && rightInfo.min <= x.value) {
-            isBST = false;
-        }
-        return new Info(isBST, max, min);
-    }
-
     public static void main(String[] args) {
         int maxLevel = 4;
         int maxValue = 100;
-        int testTimes = 1;
+        int testTimes = 10000;
         for (int i = 0; i < testTimes; i++) {
-             Node head = BinaryTreeComparator.generateRandomBinaryTree(maxLevel, maxValue);
+            Node head = BinaryTreeComparator.generateRandomBinaryTree(maxLevel, maxValue);
             if (isBST1(head) != isBST2(head)) {
                 final boolean isBST1 = isBST1(head);
                 final boolean isBST2 = isBST2(head);
                 System.out.println("isBST1: " + isBST1);
                 System.out.println("isBST2: " + isBST2);
                 System.out.println("Oops!");
+                break;
             }
         }
         System.out.println("finish!");

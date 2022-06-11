@@ -1,6 +1,7 @@
 package learn.algorithm.structure.graph;
 
 import java.util.HashSet;
+import java.util.Set;
 import java.util.Stack;
 
 /**
@@ -13,7 +14,7 @@ public class DFS {
             return;
         }
         Stack<Node> stack = new Stack<>();
-        HashSet<Node> set = new HashSet<>();
+        Set<Node> set = new HashSet<>();
         stack.add(node);
         set.add(node);
         System.out.println(node.value);
@@ -25,6 +26,8 @@ public class DFS {
                     stack.push(next);
                     set.add(next);
                     System.out.println(next.value);
+                    // break 表示选择子节点中的一条未遍历的路径（第一个入栈的子节点）进行遍历
+                    // 也可以不用 break，那么就会优先遍历最后入栈的子节点
                     break;
                 }
             }

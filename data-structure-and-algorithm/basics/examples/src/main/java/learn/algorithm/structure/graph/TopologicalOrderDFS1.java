@@ -1,73 +1,60 @@
 package learn.algorithm.structure.graph;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 题目链接：https://www.lintcode.com/problem/127/
- * 拓扑排序，基于节点的最大深度（深度优先遍历思想）
+ * 拓扑排序，基于点次（深度优先遍历思想）
  */
 public class TopologicalOrderDFS1 {
 
-    static class DirectedGraphNode {
+    List<DirectedGraphNode> r;
+    // 标记图中节点
+    Map<DirectedGraphNode, Integer> gmark;
+
+    public List<DirectedGraphNode> topSort(ArrayList<DirectedGraphNode> graph) {
+        this.r = new ArrayList<>();
+        this.gmark = new HashMap<>();
+        for (Object obj : graph) {
+            DirectedGraphNode g = (DirectedGraphNode) obj;
+            this.dfs(g);
+        }
+        // 反转模拟栈的数组并返回
+        Collections.reverse(this.r);
+        return this.r;
+    }
+
+    private void dfs(DirectedGraphNode s) {
+        // 如果节点已经访问过了就直接返回
+        if (this.gmark.computeIfAbsent(s, value -> 0) == 1) return ;
+        // 节点访问过了标记变为 1
+        this.gmark.compute(s, (key, value) -> 1);
+        // 如果没有相邻节点直接入栈
+        if (s.neighbors.size() == 0) {
+            this.r.add(s);
+            return;
+        }
+        for (DirectedGraphNode obj : s.neighbors) {
+            this.dfs(obj);
+        }
+        this.r.add(s);
+    }
+
+    /**
+     * 图的节点结构
+     */
+    private static class DirectedGraphNode {
         public int label;
         public ArrayList<DirectedGraphNode> neighbors;
 
         public DirectedGraphNode(int x) {
             label = x;
-            neighbors = new ArrayList<DirectedGraphNode>();
+            neighbors = new ArrayList<>();
         }
-    }
-
-    static class Record {
-        public DirectedGraphNode node;
-        public int deep;
-
-        public Record(DirectedGraphNode n, int o) {
-            node = n;
-            deep = o;
-        }
-    }
-
-    static class MyComparator implements Comparator<Record> {
-
-        @Override
-        public int compare(Record o1, Record o2) {
-            return -(o1.deep - o2.deep);
-        }
-    }
-
-    static ArrayList<DirectedGraphNode> topSort(ArrayList<DirectedGraphNode> graph) {
-        HashMap<DirectedGraphNode, Record> order = new HashMap<>();
-        for (DirectedGraphNode cur : graph) {
-            f(cur, order);
-        }
-        ArrayList<Record> recordArr = new ArrayList<>();
-        for (Record r : order.values()) {
-            recordArr.add(r);
-        }
-        recordArr.sort(new MyComparator());
-        ArrayList<DirectedGraphNode> ans = new ArrayList<DirectedGraphNode>();
-        for (Record r : recordArr) {
-            ans.add(r.node);
-        }
-        return ans;
-    }
-
-    /**
-     * 求节点最大深度
-     */
-    private static Record f(DirectedGraphNode cur, HashMap<DirectedGraphNode, Record> order) {
-        if (order.containsKey(cur)) {
-            return order.get(cur);
-        }
-        int follow = 0;
-        for (DirectedGraphNode next : cur.neighbors) {
-            follow = Math.max(follow, f(next, order).deep);
-        }
-        Record ans = new Record(cur, follow + 1);
-        order.put(cur, ans);
-        return ans;
     }
 }

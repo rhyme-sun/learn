@@ -49,55 +49,36 @@ public class SlidingWindowMaxArray {
      * @return 结果数组，数组 i 位置的值表示窗口 i+1 次移动时，内部最大元素
      */
     static int[] getMax(int[] arr, int w) {
-        if (arr == null || w < 1 || arr.length < w) {
+        if (arr == null || arr.length == 0 || w < 1) {
             return null;
         }
-        int[] res = new int[arr.length - w + 1];
-        // 双端队列
-        Deque<Integer> queue = new LinkedList<>();
-        // 窗口向右边移动（遍历 r 运动轨迹），每移动一次，都有一个元素进入窗口，有一个元素从从窗口移出
-        int index = 0;
-        for (int r = 0; r < arr.length; r++) {
-            addLast(arr, r, queue);
-            pollFirst(r-w, queue);
-            if (r >= w - 1) {
-                res[index++] = arr[queue.peekFirst()];
+        int n = arr.length;
+        int[] res = new int[n - w + 1];
+        Deque<Integer> maxQ = new LinkedList<>();
+        int l = 0, r = 0;
+        for (; r < n; r++) {
+            // r 入队
+            while (!maxQ.isEmpty() && arr[maxQ.peekLast()] <= arr[r]) {
+                maxQ.pollLast();
             }
+            maxQ.addLast(r);
+
+            if (r > w - 1) {
+                // l 出队
+                if (maxQ.peekFirst() == l) {
+                    maxQ.pollFirst();
+                }
+                l++;
+            }
+            res[l] = arr[maxQ.peekFirst()];
         }
         return res;
-    }
-
-    /**
-     * 向双端队列队尾添加元素，并保证队列头部为当前窗口最大值
-     *
-     * @param arr   样本数组
-     * @param r     窗口 r 位置（数组上）
-     * @param queue 双端队列
-     */
-    static void addLast(int[] arr, int r, Deque<Integer> queue) {
-        // 从队列尾部弹出元素直到队列尾部元素大于 arr[r] 的值或者队列为空
-        while (!queue.isEmpty() && arr[queue.peekLast()] < arr[r]) {
-            queue.pollLast();
-        }
-        queue.addLast(r);
-    }
-
-    /**
-     * 移除双端队列头部元素，并保证队列头部为当前窗口最大值
-     *
-     * @param l     窗口 l 位置（数组上）
-     * @param queue 双端队列
-     */
-    static void pollFirst(int l, Deque<Integer> queue) {
-        if (queue.peekFirst() == l) {
-            queue.pollFirst();
-        }
     }
 
     public static void main(String[] args) {
         int maxSize = 100;
         int maxValue = 100;
-        int testTimes = 100000;
+        int testTimes = 1000000;
 
         for (int i = 0; i < testTimes; i++) {
             int[] arr = ArrayComparator.generateRandomArray(maxSize, maxValue);
@@ -111,6 +92,7 @@ public class SlidingWindowMaxArray {
                 ArrayComparator.printArray(ans1);
                 System.out.println("双端队列：");
                 ArrayComparator.printArray(ans2);
+                break;
             }
         }
         System.out.println("Finish!");

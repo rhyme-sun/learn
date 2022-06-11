@@ -85,7 +85,8 @@ public class DescendOrderPair {
         int maxValue = 100;
         boolean succeed = true;
         for (int i = 0; i < testTime; i++) {
-            int[] arr1 = SortTestUtils.generateRandomArray(maxSize, maxValue);
+//            int[] arr1 = SortTestUtils.generateRandomArray(maxSize, maxValue);
+            int[] arr1 = {3, 5, 4};
             int[] arr2 = SortTestUtils.copyArray(arr1);
             int smallSum1 = count(arr1);
             int smallSum2 = comparator(arr2);

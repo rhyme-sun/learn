@@ -20,11 +20,7 @@ public class LongestSumSubArrayLengthInPositiveArray {
                 len = Math.max(len, right - left + 1);
                 sum -= arr[left++];
             } else if (sum < K) {
-                right++;
-                if (right == arr.length) {
-                    break;
-                }
-                sum += arr[right];
+                sum += ++right == arr.length ? 0 : arr[right];
             } else {
                 sum -= arr[left++];
             }
@@ -59,8 +55,8 @@ public class LongestSumSubArrayLengthInPositiveArray {
         int value = 5;
         int testTimes = 1;
         for (int i = 0; i < testTimes; i++) {
-//            int[] arr = ArrayComparator.generatePositiveRandomArray(len, value);
-            int[] arr = new int[] {2, 1, 1, 1, 6, 1, 1, 1, 1, 1};
+            int[] arr = ArrayComparator.generatePositiveRandomArray(len, value);
+//            int[] arr = new int[]{2, 1, 1, 1, 6, 1, 1, 1, 1, 1};
             int K = (int) (Math.random() * value) + 1;
             int ans1 = getMaxLength(arr, K);
             int ans2 = right(arr, K);

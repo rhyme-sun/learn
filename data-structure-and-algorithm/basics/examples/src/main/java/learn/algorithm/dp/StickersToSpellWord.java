@@ -2,6 +2,7 @@ package learn.algorithm.dp;
 
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 贴纸问题，描述如下：
@@ -18,6 +19,79 @@ import java.util.HashMap;
 public class StickersToSpellWord {
 
     static int minStickers1(String[] stickers, String target) {
+        int ans = process(stickers, target, 0);
+        return ans == Integer.MAX_VALUE ? -1 : ans;
+    }
+
+    // 当前 state，返回凑出 target 全部字符需要最少贴纸数量
+    private static int process(String[] stickers, String target, int state) {
+        int n = target.length();
+        if (state == (1 << n) - 1) {
+            return 0;
+        }
+        int ans = Integer.MAX_VALUE;
+        // 枚举每个贴纸，去凑 target
+        for (String sticker : stickers) {
+            int nstate = changeState(sticker, target, state);
+            if (nstate != state) {
+                int p1 = process(stickers, target, nstate);
+                if (p1 != Integer.MAX_VALUE) {
+                    ans = Math.min(ans, p1 + 1);
+                }
+            }
+        }
+        return ans;
+    }
+
+    // 记忆化搜索优化
+    static int minStickers2(String[] stickers, String target) {
+        int[] dp = new int[(1 << target.length())];
+        Arrays.fill(dp, -1);
+        int ans = process(stickers, target, 0, dp);
+        return ans == Integer.MAX_VALUE ? -1 : ans;
+    }
+
+    // 当前 state，返回凑出 target 全部字符需要最少贴纸数量
+    private static int process(String[] stickers, String target, int state, int[] dp) {
+        if (dp[state] != -1) {
+            return dp[state];
+        }
+        int ans = Integer.MAX_VALUE;
+        int n = target.length();
+        if (state == (1 << n) - 1) {
+            ans = 0;
+        } else {
+            // 枚举每个贴纸，去凑 target
+            for (String sticker : stickers) {
+                int nstate = changeState(sticker, target, state);
+                if (nstate != state) {
+                    int p1 = process(stickers, target, nstate, dp);
+                    if (p1 != Integer.MAX_VALUE) {
+                        ans = Math.min(ans, p1 + 1);
+                    }
+                }
+            }
+        }
+        dp[state] = ans;
+        return ans;
+    }
+
+    // 用 sticker 中的字符去凑 target，每个位置上的字符只能使用一次，并更新 state
+    private static int changeState(String sticker, String target, int state) {
+        out:
+        for (char s : sticker.toCharArray()) {
+            for (int i = 0; i < target.length(); i++) {
+                if (s == target.charAt(i) && ((state >> i) & 1) == 0) {
+                    state |= (1 << i);
+                    continue out;
+                }
+            }
+        }
+        return state;
+    }
+
+    // 不使用状态压缩，使用去除已经凑出的字符的方式进行讨论
+    static int minStickers3(String[] stickers, String target) {
         int ans = process1(stickers, target);
         return ans == Integer.MAX_VALUE ? -1 : ans;
     }
@@ -69,7 +143,7 @@ public class StickersToSpellWord {
         return builder.toString();
     }
 
-    static int minStickers2(String[] stickers, String target) {
+    static int minStickers4(String[] stickers, String target) {
         int n = stickers.length;
         // 关键优化（用词频表替代贴纸数组）
         // 贴纸字符串不再用字符串表示，而是用一个长度为 26 数组，数组的每个位置存放其对应字母出现的次数，比如数组 0 位置为 2，表示
@@ -96,9 +170,6 @@ public class StickersToSpellWord {
         if (t.length() == 0) {
             return 0;
         }
-        // target做出词频统计
-        // target  aabbc  2 2 1..
-        //                0 1 2..
         char[] target = t.toCharArray();
         int[] tcounts = new int[26];
         for (char cha : target) {
@@ -128,7 +199,7 @@ public class StickersToSpellWord {
         return min + (min == Integer.MAX_VALUE ? 0 : 1);
     }
 
-    static int minStickers3(String[] stickers, String target) {
+    static int minStickers5(String[] stickers, String target) {
         int N = stickers.length;
         int[][] counts = new int[N][26];
         for (int i = 0; i < N; i++) {
@@ -146,7 +217,7 @@ public class StickersToSpellWord {
     /**
      * 方法 3，记忆搜索优化
      */
-    private static int process3(int[][] stickers, String t, HashMap<String, Integer> dp) {
+    private static int process3(int[][] stickers, String t, Map<String, Integer> dp) {
         if (dp.containsKey(t)) {
             return dp.get(t);
         }
@@ -184,5 +255,7 @@ public class StickersToSpellWord {
         System.out.println(minStickers1(stickers, target));
         System.out.println(minStickers2(stickers, target));
         System.out.println(minStickers3(stickers, target));
+        System.out.println(minStickers4(stickers, target));
+        System.out.println(minStickers5(stickers, target));
     }
 }
