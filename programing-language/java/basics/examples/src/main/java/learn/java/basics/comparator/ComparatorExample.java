@@ -22,22 +22,40 @@ public class ComparatorExample {
         Collections.sort(students, new StudentComparator());
         Collections.sort(students, Collections.reverseOrder(new StudentComparator()));
         log.info("Ordered students: {}", students);
+
+        createComparator();
+    }
+
+    private static void createComparator() {
+        Comparator<Student> comparator = Comparator.comparing((Student s) -> s.age).thenComparing(s -> s.name);
+        final List<Student> students = generateRandomStudent();
+        log.info("Students: {}", students);
+        Collections.sort(students);
+        Collections.sort(students, comparator);
+        log.info("Ordered students: {}", students);
     }
 
     private static List<Student> generateRandomStudent() {
         List<Student> students = new ArrayList<>();
         for (int i = 0; i < 5; i++) {
             int age = (int) (Math.random() * 10) + 10;
-            students.add(new Student(age));
+            String name = String.valueOf((char) ('a' + (int) (Math.random() * 10)));
+            students.add(new Student(name, age));
         }
         return students;
     }
 
     static class Student implements Comparable<Student> {
 
-        private int age;
+        String name;
+        int age;
 
         public Student(int age) {
+            this.age = age;
+        }
+
+        public Student(String name, int age) {
+            this.name = name;
             this.age = age;
         }
 
@@ -49,7 +67,8 @@ public class ComparatorExample {
         @Override
         public String toString() {
             return "Student{" +
-                    "age=" + age +
+                    "name='" + name + '\'' +
+                    ", age=" + age +
                     '}';
         }
     }
