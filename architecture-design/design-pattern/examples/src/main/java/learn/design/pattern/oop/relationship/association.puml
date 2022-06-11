@@ -1,0 +1,11 @@
+@startuml
+
+class A
+class B
+
+note top of A : A 与 B 相关联
+
+A "1" -right--> "n" B : association
+
+
+@enduml

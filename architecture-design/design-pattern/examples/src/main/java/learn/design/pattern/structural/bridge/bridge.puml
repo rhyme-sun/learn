@@ -1,0 +1,21 @@
+@startuml
+
+abstract class Abstraction {
+    # Implementor implementor;
+    + void operation();
+}
+interface Implementor
+
+interface RefinedAbstraction {
+    + void otherOperation();
+}
+class ConcreteImplementorA
+class ConcreteImplementorB
+
+Abstraction <|- RefinedAbstraction : 抽象类扩展类，独立扩展抽象层次
+
+Implementor <|.. ConcreteImplementorA
+Implementor <|.. ConcreteImplementorB
+
+Abstraction --* Implementor : 抽象化类层次组合了实现化层次，这种关系叫做“桥接”
+@enduml

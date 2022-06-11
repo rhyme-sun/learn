@@ -1,0 +1,32 @@
+@startuml
+
+note "组合模式类图" as N1
+
+interface Component {
+    operation()
+    add(Component)
+    remove(Component)
+    getChild(int)
+}
+
+class Leaf {
+    operation()
+}
+
+class Composite {
+    operation()
+    add(Component)
+    remove(Component)
+    getChild(int)
+}
+
+class Client
+
+Component <|..-down Leaf
+Component <|.. Composite
+
+Component <--right Composite
+
+Component <---right Client
+
+@enduml

@@ -1,0 +1,17 @@
+@startuml
+
+note "访问控制符 UML 符号" as N1
+
+note "'+' 对应 public" as n1
+note "'#' 对应 protected" as n2
+note "'-' 对应 private" as n3
+note "不带符号 对应 default" as n4
+
+class A {
+
+    + String a1;
+    # String a2;
+      String a3;
+    - String a4;
+}
+@enduml

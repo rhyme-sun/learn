@@ -1,0 +1,8 @@
+@startuml
+
+class A
+interface B
+
+note top of A : A 实现 B
+A -right.|> B: realization
+@enduml

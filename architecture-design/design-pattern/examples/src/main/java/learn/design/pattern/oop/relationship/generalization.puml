@@ -1,0 +1,10 @@
+@startuml
+
+class A
+class B
+
+note top of A : A 继承 B
+
+A -right--|> B:generalization
+
+@enduml

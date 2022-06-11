@@ -1,0 +1,46 @@
+@startuml
+
+note "DI容器最小原型类图" as N1
+
+interface ApplicationContext {
+    Object getBean(String beanId);
+}
+class ClassPathXmlApplicationContext
+
+interface BeanConfigParser {
+}
+class XmlBeanConfigParser
+
+class BeanDefinition {
+    - String id;
+    - String className;
+    - List constructorArgs;
+    - Scope scope = Scope.SINGLETON;
+    - boolean lazyInit = false;
+}
+enum Scope {
+    SINGLETON,PROTOTYPE
+}
+class ConstructorArg {
+    - boolean isRef;
+    - Class type;
+    - Object arg;
+}
+
+class BeansFactory {
+    - ConcurrentHashMap singletonObjects = new ConcurrentHashMap<>();
+    - ConcurrentHashMap beanDefinitions = new ConcurrentHashMap<>();
+}
+
+ClassPathXmlApplicationContext ..up|> ApplicationContext
+ClassPathXmlApplicationContext ..> BeansFactory
+ClassPathXmlApplicationContext ..> BeanConfigParser
+XmlBeanConfigParser ..up|> BeanConfigParser
+
+BeanDefinition ..> Scope
+BeanDefinition ..> ConstructorArg
+
+BeansFactory ..> BeanDefinition
+XmlBeanConfigParser ..> BeanDefinition
+
+@enduml

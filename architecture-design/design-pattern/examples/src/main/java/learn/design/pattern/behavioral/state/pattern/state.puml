@@ -1,0 +1,27 @@
+@startuml
+
+note "状态模式类图" as N1
+
+interface State {
+    handle(StateMachine stateMachine)
+}
+
+class ConcreteStateA {
+    handle(StateMachine stateMachine)
+}
+
+class ConcreteStateB {
+    handle(StateMachine stateMachine)
+}
+
+class StateMachine {
+    State currentState
+    request(){currentState.handle();}
+}
+
+State <|.. ConcreteStateA
+State <|.. ConcreteStateB
+
+State <- StateMachine
+StateMachine <- State
+@enduml

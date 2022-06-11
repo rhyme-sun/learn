@@ -1,0 +1,22 @@
+@startuml
+note "简单工厂模式类图" as N1
+
+abstract class BasePizza {
+    String name
+    ArrayList<String> ingredients
+    # abstract void prepare()
+    # void bake()
+    # void cut()
+    # void box()
+    # void progress()
+}
+class BeefPizza
+class DurainPizza
+
+class PizzaStore
+
+PizzaStore ..> BasePizza : "PizzaStore 依赖了披萨的抽象 BasePizza"
+BeefPizza --down|> BasePizza
+DurainPizza --down|> BasePizza
+
+@enduml

@@ -1,0 +1,43 @@
+@startuml
+
+note "策略模式类图" as N1
+
+abstract class Duck {
+    -FlyBehavior flyBehavior
+    -QuackBehavior quackBehavior
+    +display()
+    +quackBehavior()
+    +flyBehavior()
+}
+class MallardDuck
+class RedheadDuck
+
+interface FlyBehavior {
+    +fly()
+}
+class FlyWithWings
+class FlyNoWay
+
+interface QuackBehavior {
+    +quack()
+}
+class Quack
+class Squack
+class MuteQuack
+
+
+MallardDuck -up-|> Duck
+RedheadDuck -up-|> Duck
+
+FlyWithWings -up.|> FlyBehavior
+FlyNoWay -up.|> FlyBehavior
+
+Quack -up.|> QuackBehavior
+Squack -up.|> QuackBehavior
+MuteQuack -up.|> QuackBehavior
+
+FlyBehavior *- Duck
+QuackBehavior *- Duck
+
+
+@enduml

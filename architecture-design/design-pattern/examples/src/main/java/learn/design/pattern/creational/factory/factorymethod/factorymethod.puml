@@ -1,0 +1,38 @@
+@startuml
+
+note "工厂方法模式类图" as N1
+
+abstract class BasePizza {
+    String name
+    ArrayList<String> ingredients
+    # abstract void prepare()
+    # void bake()
+    # void cut()
+    # void box()
+    # void progress()
+}
+class BeefPizza
+class DurainPizza
+
+interface IPizzaStore {
+    createPizza()
+}
+class BeefPizzaStore
+class DurianPizzaStore
+
+class PizzaStoreFactory {
+    createPizzaStore()
+}
+
+BeefPizza --down|> BasePizza
+DurainPizza --down|> BasePizza
+
+BeefPizzaStore ..> BeefPizza
+DurianPizzaStore ..> DurainPizza
+
+BeefPizzaStore ..down|> IPizzaStore
+DurianPizzaStore ..down|> IPizzaStore
+
+PizzaStoreFactory ..> IPizzaStore
+
+@enduml

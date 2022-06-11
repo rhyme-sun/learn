@@ -1,0 +1,31 @@
+@startuml
+
+note "动态代理模式类图" as N1
+interface Subject {
+    request()
+}
+
+interface InvocationHandler {
+    invoke()
+}
+
+class RealSubject {
+     request()
+}
+
+class InvocationHandlerImpl {
+    invoke()
+}
+
+class Proxy {
+    request()
+}
+
+Subject <|... RealSubject
+Subject <|... Proxy
+
+InvocationHandler <|... InvocationHandlerImpl
+
+RealSubject <--left InvocationHandlerImpl
+InvocationHandlerImpl <---right Proxy
+@enduml

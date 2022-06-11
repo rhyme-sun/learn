@@ -1,0 +1,62 @@
+@startuml
+note "装饰者模式类图" as N1
+
+abstract class Beverage {
+    -String description
+    +double cost()
+    +String getDescription()
+}
+class HouseBlend {
+    +double cost()
+}
+class DarkRoast {
+    +double cost()
+}
+class Decaf {
+    +double cost()
+}
+class Espresso {
+    +double cost()
+}
+
+abstract class CondimentDecorator {
+     +String getDescription()
+}
+class Soy {
+    Beverage beverage
+    +double cost()
+    +String getDescription()
+}
+class Milk{
+    Beverage beverage
+    +double cost()
+    +String getDescription()
+}
+class Mocha{
+    Beverage beverage
+    +double cost()
+    +String getDescription()
+}
+class Whip{
+    Beverage beverage
+    +double cost()
+    +String getDescription()
+}
+
+Beverage <|--right CondimentDecorator
+Beverage <|--down HouseBlend
+Beverage <|--down DarkRoast
+Beverage <|--down Decaf
+Beverage <|--down Espresso
+
+CondimentDecorator <|--down Soy
+CondimentDecorator <|--down Milk
+CondimentDecorator <|--down Mocha
+CondimentDecorator <|--down Whip
+
+Beverage o- Soy
+Beverage o- Milk
+Beverage o- Mocha
+Beverage o- Whip
+
+@enduml

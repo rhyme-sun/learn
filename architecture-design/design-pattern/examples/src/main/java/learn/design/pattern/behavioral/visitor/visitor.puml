@@ -1,0 +1,30 @@
+@startuml
+
+note "访问者设计模式类图" as N1
+
+interface Visitable {
+    void accept(Visitor v);
+}
+interface Visitor {
+    void visit(ConcreteVisitableA a);
+    void visit(ConcreteVisitableB b);
+}
+
+class ConcreteVisitableA {
+    + void accept(Visitor v) {v.visit(this);}
+}
+class ConcreteVisitableB {
+    + void accept(Visitor v) {v.visit(this);}
+}
+
+Visitable <|-- ConcreteVisitableA
+Visitable <|-- ConcreteVisitableB
+
+Visitor <|-- ConcreteVisitorA
+Visitor <|-- ConcreteVisitorB
+
+Visitable ..right> Visitor
+Visitor ..> ConcreteVisitableA
+Visitor ..> ConcreteVisitableB
+
+@enduml

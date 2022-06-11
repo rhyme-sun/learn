@@ -1,0 +1,10 @@
+@startuml
+
+class A
+class B
+
+note top of A : A 聚合 B
+
+A -right-o B : aggregation
+
+@enduml

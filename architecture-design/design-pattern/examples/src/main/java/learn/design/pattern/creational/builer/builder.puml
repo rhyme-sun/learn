@@ -1,0 +1,40 @@
+@startuml
+
+note "建造者模式类图" as N1
+
+class ResourcePoolConfig {
+ - String name;
+ - int maxTotal;
+ - int maxIdle;
+ - int minIdle;
+ - ResourcePoolConfig(ResourcePoolConfigBuilder builder) { this.name = builder.name; ...}
+ + String getName();
+ + int getMaxTotal();
+ + int getMaxIdle();
+ + int getMinIdle();
+ + static class class ResourcePoolConfigBuilder {}
+}
+
+note "ResourcePoolConfigBuilder作为ResourcePoolConfig一个私有静态内部类" as N2
+class ResourcePoolConfigBuilder {
+    - String name;
+    - int maxTotal;
+    - int maxIdle;
+    - int minIdle;
+
+    + String getName();
+    + int getMaxTotal();
+    + int getMaxIdle();
+    + int getMinIdle();
+
+    + ResourcePoolConfigBuilder setName(String name) { ... return this;}
+    + ResourcePoolConfigBuilder getMaxTotal(int maxTotal) { ... return this;}
+    + ResourcePoolConfigBuilder getMaxIdle(int maxIdle) { ... return this;}
+    + ResourcePoolConfigBuilder getMinIdle(int minIdle) { ... return this;}
+
+    public ResourcePoolConfig build() {添加校验逻辑; return new ResourcePoolConfig(this);}
+}
+
+ResourcePoolConfig ..> ResourcePoolConfigBuilder
+
+@enduml

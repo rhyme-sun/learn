@@ -1,0 +1,32 @@
+@startuml
+
+interface Target {
+    f1();
+    f2();
+    f();
+}
+class Adaptee {
+    fa();
+    fb();
+    f();
+}
+class AdapterBaseOnExtend {
+    f1() {super.fa();};
+    f2() {//重新实现f2};
+    // 这里f()方法不用实现，直接继承Adaptee
+    // f() {};
+}
+class AdapterBaseOnImplement {
+    // 组合适应者
+    private Adaptee adaptee;
+
+    f1() {adaptee.f1()};
+    f2() {//重新实现f2};
+    f() {adaptee.f()};
+}
+
+Target <|.. Adaptee
+Adaptee <|--right AdapterBaseOnExtend : "基于继承适配"
+Target <|.. AdapterBaseOnExtend
+Target <|.. AdapterBaseOnImplement : "基于组合适配"
+@enduml

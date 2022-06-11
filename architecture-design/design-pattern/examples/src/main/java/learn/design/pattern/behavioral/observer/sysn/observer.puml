@@ -1,0 +1,44 @@
+@startuml
+
+
+note "观察者模式类图" as N1
+
+interface Subject {
+    +registerObserver()
+    +removeObserver()
+    +notifyObservers()
+}
+
+interface Observer {
+    +update()
+}
+
+interface DisplayElement {
+    +display()
+}
+
+class WeatherData {
+    +getTemperature()
+    +getHumidity()
+    +getPressure()
+    +measurementsChanged()
+}
+
+class CurrentConditionsDisplay
+class StatisticDisplay
+class ForecastDisplay
+
+CurrentConditionsDisplay -up.|> Observer
+CurrentConditionsDisplay -up.|> DisplayElement
+
+StatisticDisplay -up.|> Observer
+StatisticDisplay -up.|> DisplayElement
+
+ForecastDisplay -up.|> Observer
+ForecastDisplay -up.|> DisplayElement
+
+Subject "1"-right-->"n" Observer
+
+WeatherData -up-|> Subject
+
+@enduml

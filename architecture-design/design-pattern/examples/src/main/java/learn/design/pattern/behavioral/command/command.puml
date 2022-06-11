@@ -1,0 +1,23 @@
+@startuml
+
+note "命令模式类图" as N
+interface Command {
+    +void execute()
+    +void undo()
+}
+class ConcreteCommand {
+    +void execute() {receiver.action()}
+}
+
+class Invoker {
+    +setCommand()
+}
+class Receiver {
+    +void action()
+}
+
+ConcreteCommand -up-|> Command
+ConcreteCommand -left..> Receiver
+Invoker -down-> Command
+
+@enduml
