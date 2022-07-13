@@ -5,9 +5,6 @@ import java.util.concurrent.atomic.LongAdder;
 
 /**
  * 原子操作效率比较
- *
- * @author ykthree
- * 2021/6/5
  */
 public class Efficiency {
 

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="description" content="Vue 循环">
+    <title>列表循环</title>
+</head>
+
+<body>
+    <div id="loop-basics">
+        <ul>
+            <li v-for="item in items">
+                {{ item.message }}
+            </li>
+        </ul>
+
+
+        <ul>
+            <li v-for="(item, index) in items">
+                {{ parentMessage }} - {{ index }} - {{ item.message }}
+            </li>
+        </ul>
+
+        <ul>
+            <li v-for="(value, name, index) in myObject">
+                {{ index }}. {{ name }}: {{ value }}
+            </li>
+        </ul>
+    </div>
+
+    <script src="https://unpkg.com/vue@next"></script>
+
+
+    <script>
+        const ConditionBasics = {
+            data() {
+                return {
+                    parentMessage: 'Parent',
+                    items: [{
+                        message: 'Foo'
+                    }, {
+                        message: 'Bar'
+                    }],
+                    myObject: {
+                        title: 'How to do lists in Vue',
+                        author: 'Jane Doe',
+                        publishedAt: '2016-04-10'
+                    }
+                }
+            }
+        }
+
+        const vm = Vue.createApp(ConditionBasics).mount("#loop-basics")
+    </script>
+</body>
+
+</html>

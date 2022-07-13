@@ -1,0 +1,74 @@
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="author" content="Simon">
+    <meta name="description" content="vue learning.">
+    <title>learn-vue</title>
+</head>
+
+<body>
+
+    <div id="components-app" class="demo">
+        <ol>
+            <todo-item v-for="item in itemList" v-bind:item="item" v-on:delete="handleDelete">
+                <template v-slot:preIcon>
+                    <span>😊</span>
+                </template>
+                <template v-slot:sufIcon>
+                    <span>😂</span>
+                </template>
+            </todo-item>
+        </ol>
+    </div>
+
+    <script src="https://unpkg.com/vue@next"></script>
+    <script>
+        const ComponentsApp = {
+            data() {
+                return {
+                    itemList: [{
+                        id: 0,
+                        text: 'Learn.'
+                    }, {
+                        id: 1,
+                        text: 'Runing.'
+                    }, {
+                        id: 2,
+                        text: 'Play Game.'
+                    }]
+                }
+            },
+            methods: {
+                handleDelete(item) {
+                    console.log(item);
+                }
+            },
+        }
+
+        const app = Vue.createApp(ComponentsApp)
+
+        app.component('todo-item', {
+            template: `
+            <li>
+                <input type="checkbox">
+                <slot name="preIcon"></slot>
+                <span>{{ item.text }}</span>
+                <slot name="sufIcon"></slot>
+                <button v-on:click="handleClick">删除</button>
+            </li>
+            `,
+            props: ["item"],
+            methods: {
+                handleClick() {
+                    console.log(this.item);
+                    this.$emit('delete', this.item)
+                }
+            },
+        })
+
+        app.mount('#components-app')
+    </script>
+</body>
+
+</html>

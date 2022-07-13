@@ -38,7 +38,7 @@ public class Main {
 		allMenus.add(restaurantMenus);
 
 		Waitress waitress = new Waitress(allMenus);
-		//waitress.printMenu();
+		waitress.printMenu();
 		System.out.println("素食菜单。。。。。");
 		waitress.printVegetarianMenu();
 	}

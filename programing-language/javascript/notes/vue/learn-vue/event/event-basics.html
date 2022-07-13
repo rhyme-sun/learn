@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="description" content="Vue 处理事件">
+    <title>事件处理</title>
+</head>
+
+<body>
+    <div id="event-basics">
+        <button @click="counter += 1">Add 1</button>
+        <p>The button above has been clicked {{ counter }} times.</p>
+
+        <p>Plus by method</p>
+        <button @click="countPlus">Add 1</button>
+        <p>The button above has been clicked {{ counter }} times.</p>
+
+        <button @click="say('hi')">Say hi</button>
+        <button @click="say('what')">Say what</button>
+    </div>
+
+    <script src="https://unpkg.com/vue@next"></script>
+
+
+    <script>
+        const EventBasics = {
+            data() {
+                return {
+                    counter: 0
+                }
+            },
+            methods: {
+                countPlus() {
+                    this.counter++;
+                },
+                say(message) {
+                    console.log(message);
+                }
+            },
+        }
+
+        const vm = Vue.createApp(EventBasics).mount("#event-basics")
+    </script>
+</body>
+
+</html>

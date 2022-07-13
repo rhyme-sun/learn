@@ -1,6 +1,5 @@
 package learn.java.jvm.jmm;
 
-import learn.jvm.agent.ObjectSizeAgent;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -10,12 +9,12 @@ import lombok.extern.slf4j.Slf4j;
 public class SizeOfAnObject {
 
     public static void main(String[] args) {
-        // 对象头（8） + ClassPointer（4） + 补齐（4）= 16
-        log.info("{}", ObjectSizeAgent.sizeOf(new Object()));
-        // 对象头（8） + ClassPointer（4） + 数组长度（4）+ 补齐（0） = 16
-        log.info("{}", ObjectSizeAgent.sizeOf(new int[]{}));
-        // 对象头（8） + ClassPointer（4） + 实例内容（19）+ 补齐（1） = 32
-        log.info("{}", ObjectSizeAgent.sizeOf(new SizeObject()));
+//        // 对象头（8） + ClassPointer（4） + 补齐（4）= 16
+//        log.info("{}", ObjectSizeAgent.sizeOf(new Object()));
+//        // 对象头（8） + ClassPointer（4） + 数组长度（4）+ 补齐（0） = 16
+//        log.info("{}", ObjectSizeAgent.sizeOf(new int[]{}));
+//        // 对象头（8） + ClassPointer（4） + 实例内容（19）+ 补齐（1） = 32
+//        log.info("{}", ObjectSizeAgent.sizeOf(new SizeObject()));
     }
 
     // -XX:+UseCompressedClassPointers：开启 ClassPointer 压缩，开启 4 个字节，不开启 8 个字节，默认开启

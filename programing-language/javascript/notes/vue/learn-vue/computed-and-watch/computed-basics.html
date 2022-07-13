@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="description" content="对于响应式数据的复杂计算逻辑应该使用计算属性。">
+    <title>计算属性</title>
+</head>
+
+<body>
+    <div id="computed-basics">
+        <p>文本插值</p>
+        <p>Has published books:</p>
+        <span>{{ author.books.length > 0 ? 'Yes' : 'No' }}</span>
+
+        <p>计算属性</p>
+        <p>Has published books:</p>
+        <span>{{ publishedBooksMessage }}</span>
+
+        <p>方法属性</p>
+        <p>Has published books:</p>
+        <span>{{ calculateBooksMessage() }}</span>
+    </div>
+
+    <script src="https://unpkg.com/vue@next"></script>
+
+    <script>
+        const ComputedBasics = {
+            data() {
+                return {
+                    author: {
+                        name: 'John Doe',
+                        books: [
+                            'Vue 2 - Advanced Guide',
+                            'Vue 3 - Basic Guide',
+                            'Vue 4 - The Mystery'
+                        ]
+                    }
+                }
+            },
+            computed: {
+                // 计算属性的 getter
+                publishedBooksMessage() {
+                    // `this` 指向 vm 实例
+                    console.log("computed")
+                    return this.author.books.length > 0 ? 'Yes' : 'No'
+                }
+            },
+            methods: {
+                calculateBooksMessage() {
+                    console.log("method")
+                    return this.author.books.length > 0 ? 'Yes' : 'No'
+                }
+            }
+        }
+        const vm = Vue.createApp(ComputedBasics).mount('#computed-basics')
+    </script>
+</body>
+
+</html>

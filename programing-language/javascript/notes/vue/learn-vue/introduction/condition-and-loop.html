@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="description" content="Vue 条件（v-if）和循环（v-for）。">
+    <title>条件和循环</title>
+</head>
+
+<body>
+
+    <div id="condition-and-loop">
+        <ul>
+            <li v-for="todo in todos">
+                {{ todo.text }}
+                <span v-if="todo.finished">已完成</span>
+                <span v-else>未完成</span>
+            </li>
+        </ul>
+    </div>
+
+    <script src="https://unpkg.com/vue@next"></script>
+
+    <script>
+        const ConditionAndLoop = {
+            data() {
+                return {
+                    todos: [{
+                        text: "Learn JavaScript",
+                        finished: true
+                    }, {
+                        text: "Learn Vue",
+                        finished: false
+                    }, {
+                        text: "Build something awesome",
+                        finished: false
+                    }]
+                }
+            }
+        }
+
+        const vm = Vue.createApp(ConditionAndLoop).mount("#condition-and-loop");
+    </script>
+</body>
+
+</html>

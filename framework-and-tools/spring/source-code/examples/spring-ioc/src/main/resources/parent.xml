@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="user" class="learn.spring.ioc.parent.User">
+        <property name="id" value="1"></property>
+        <property name="name" value="Simon"></property>
+        <property name="age" value="100"></property>
+    </bean>
+
+    <bean id="superUser" class="learn.spring.ioc.parent.SuperUser" parent="user" primary="true">
+        <property name="address" value="Xi'an"></property>
+    </bean>
+</beans>

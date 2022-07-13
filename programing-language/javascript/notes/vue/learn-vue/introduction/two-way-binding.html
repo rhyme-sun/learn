@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="description" content="使用 v-model 命令实现 Input 元素的输入值和显示值的双向绑定。">
+    <title>双向绑定</title>
+</head>
+
+<body>
+    <div id="bind-two-way">
+        <p>Hello {{ message }}</p>
+        <input v-model="message">
+    </div>
+    <script src="https://unpkg.com/vue@next"></script>
+
+    <script>
+        const TwoWayBinding = {
+            data() {
+                return {
+                    message: "Simon"
+                }
+            }
+        }
+
+        const vm = Vue.createApp(TwoWayBinding).mount("#bind-two-way");
+    </script>
+</body>
+
+</html>

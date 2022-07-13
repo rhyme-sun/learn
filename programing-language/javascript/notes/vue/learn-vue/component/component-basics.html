@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="description" content="Vue 组件。">
+    <title>组件基础</title>
+</head>
+
+<body>
+    <div id="component-basics">
+        <button-counter></button-counter>
+        <button-counter></button-counter>
+
+        <nested-button-counter></nested-button-counter>
+
+        <p>根组件数据向下传递到子组件</p>
+        <blog-post :title="title" :key="id"></blog-post>
+
+        <p>监听子组件事件</p>
+        <div :style="{ fontSize: postFontSize + 'em' }">
+            <blog-post-event :title="title" :key="id" @enlarge-text="postFontSize += 0.1"></blog-post-event>
+        </div>
+
+        <p>插槽分发内容</p>
+        <alert-box>
+            Something bad happened.
+        </alert-box>
+    </div>
+
+    <script src="https://unpkg.com/vue@next"></script>
+
+    <script>
+        const app = Vue.createApp({
+            data() {
+                return {
+                    id: 1,
+                    title: 'My journey with Vue',
+                    postFontSize: 1
+                }
+            }
+        })
+
+        app.component("button-counter", {
+            data() {
+                return {
+                    count: 0
+                }
+            },
+            template: `
+            <button @click="count++">
+            You clicked me {{ count }} times.
+            </button>
+            `
+        })
+
+        app.component("nested-button-counter", {
+            data() {
+                return {
+                    count: 0
+                }
+            },
+            template: `
+            <button-counter></button-counter>
+            `
+        })
+
+        app.component("blog-post", {
+            props: ['title'],
+            template: `
+            <h4>{{ title }}</h4>
+            `
+        })
+
+
+        app.component("blog-post-event", {
+            props: ['title'],
+            template: `
+            <h4>{{ title }}</h4>
+            <button  @click="$emit('enlargeText')">
+                Enlarge text
+            </button>
+            `
+        })
+
+        app.component('alert-box', {
+            template: `
+            <div class="demo-alert-box">
+            <strong>Error!</strong>
+            <slot></slot>
+            </div>`
+        })
+
+        app.mount("#component-basics")
+    </script>
+</body>
+
+</html>

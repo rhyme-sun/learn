@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="description" content="元素 Style 属性绑定增强。">
+    <title>Style属性绑定</title>
+</head>
+
+<body>
+
+    <div id="bind-style">
+        <p :style="{color: styleObject.color, fontSize: styleObject.fontSize + 'px'}">对象语法</p>
+        <p :style="styleObject">StyleObject</p>
+
+        <p :style="[baseStyles, overridingStyles]">数组语法</p>
+
+        <p :style="{ display: ['-webkit-box', '-ms-flexbox', 'flex'] }">多重值</p>
+    </div>
+
+    <script src="https://unpkg.com/vue@next"></script>
+
+    <script>
+        const StyleBinding = {
+            data() {
+                return {
+                    styleObject: {
+                        color: 'red',
+                        fontSize: '13px'
+                    },
+                    baseStyles: {
+                        color: 'red',
+                        fontSize: '13px'
+                    },
+                    overridingStyles: {
+                        color: 'green',
+                        fontSize: '13px'
+                    }
+                }
+            }
+        }
+        const vm = Vue.createApp(StyleBinding).mount("#bind-style")
+    </script>
+</body>
+
+</html>

@@ -33,47 +33,48 @@ public class Code05_MaxSumLengthNoMore {
         return max;
     }
 
-    static int maxSum(int[] arr, int m) {
-        if (arr == null || arr.length == 0 || m < 1) {
+    static int maxSum2(int[] arr, int w) {
+        if (arr == null || arr.length == 0 || w < 1) {
             return 0;
         }
         int n = arr.length;
-        m = Math.min(n, m);
         int[] sums = new int[n];
         sums[0] = arr[0];
         for (int i = 1; i < n; i++) {
             sums[i] += sums[i - 1] + arr[i];
         }
-        // 单独处理第一个窗口
-        Deque<Integer> maxQ = new LinkedList<>();
-        for (int r = 0; r < m; r++) {
-            while (!maxQ.isEmpty() && sums[maxQ.peekLast()] <= sums[r]) {
-                maxQ.pollLast();
+        w = Math.min(n, w);
+        int ans = Integer.MIN_VALUE;
+        int left = 0, right = 0;
+
+        Deque<Integer> deque = new LinkedList<>();
+        while (right < n) {
+            int in = sums[right];
+            while (!deque.isEmpty() && in >= sums[deque.peekLast()]) {
+                deque.pollLast();
             }
-            maxQ.addLast(r);
+            deque.addLast(right);
+            right++;
+
+            while (right - left == w) {
+                // 左侧前一个值
+                int beforeLeft = left == 0 ? 0 : sums[left - 1];
+                ans = Math.max(ans, sums[deque.peekFirst()] - beforeLeft);
+                if (left == deque.peekFirst()) {
+                    deque.pollFirst();
+                }
+                left++;
+            }
         }
-        int maxSum = sums[maxQ.peekFirst()];
-        int l = 0; // l 指向窗口左侧前一个位置
-        for (int r = m; r < n; r++, l++) {
-            while (!maxQ.isEmpty() && sums[maxQ.peekLast()] <= sums[r]) {
-                maxQ.pollLast();
+        // 处理剩余部分
+        while (left < n) {
+            ans = Math.max(ans, sums[deque.peekFirst()] - sums[left - 1]);
+            if (deque.peekFirst() == left) {
+                deque.pollFirst();
             }
-            maxQ.addLast(r);
-            if (maxQ.peekFirst() == l) {
-                maxQ.pollFirst();
-            }
-            int cur = sums[maxQ.peekFirst()] - sums[l];
-            maxSum = Math.max(maxSum, cur);
+            left++;
         }
-        // 处理队列里剩余元素
-        for (; l < n - 1; l++) {
-            if (maxQ.peekFirst() == l) {
-                maxQ.pollFirst();
-            }
-            int cur = sums[maxQ.peekFirst()] - sums[l];
-            maxSum = Math.max(maxSum, cur);
-        }
-        return maxSum;
+        return ans;
     }
 
     public static void main(String[] args) {
@@ -83,9 +84,9 @@ public class Code05_MaxSumLengthNoMore {
         int maxM = 10;
         for (int i = 0; i < testTimes; i++) {
             int[] arr = ArrayComparator.generateRandomArray(maxSize, maxValue);
-            int m = (int) (Math.random() * maxM + 1);
-            int ans1 = maxSum(arr, m);
-            int ans2 = maxSum1(arr, m);
+             int m = (int) (Math.random() * maxM + 1);
+            int ans1 = maxSum1(arr, m);
+            int ans2 = maxSum2(arr, m);
             if (ans1 != ans2) {
                 System.out.println(m);
                 ArrayComparator.printArray(arr);

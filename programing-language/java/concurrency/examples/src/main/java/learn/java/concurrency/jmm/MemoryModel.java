@@ -1,11 +1,8 @@
 package learn.java.concurrency.jmm;
 
-import java.util.Map;
-
 /**
- * MemoryModel
- *
- * @author ykthree
+ * MemoryModel.
+ * 指令重排测试，如果多线程情况下，(a,b) 的值出现了 (1,1) 的情况，则说明了发生了指令重排。
  */
 public class MemoryModel {
 

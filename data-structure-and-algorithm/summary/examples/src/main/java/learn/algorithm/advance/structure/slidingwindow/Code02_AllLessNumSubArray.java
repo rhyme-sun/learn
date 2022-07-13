@@ -34,49 +34,45 @@ public class Code02_AllLessNumSubArray {
                 }
             }
         }
+
         return count;
     }
 
-    /**
-     * 使用双端队列，存放窗口内的最大值和最小值
-     */
+    // 使用双端队列，存放窗口内的最大值和最小值
     static int num(int[] arr, int sum) {
         if (arr == null || arr.length == 0 || sum < 0) {
             return 0;
         }
         int n = arr.length;
-        int count = 0;
         Deque<Integer> maxQ = new LinkedList<>();
         Deque<Integer> minQ = new LinkedList<>();
-        int r = 0;
-        for (int l = 0; l < n; l++) {
-            // 窗口右边界向右移动，直到窗口内的元素不满足要求
-            while (r < n) {
-                while (!maxQ.isEmpty() && arr[maxQ.peekLast()] <= arr[r]) {
-                    maxQ.pollLast();
-                }
-                maxQ.addLast(r);
-                while (!minQ.isEmpty() && arr[minQ.peekLast()] >= arr[r]) {
-                    minQ.pollLast();
-                }
-                minQ.addLast(r);
-                if (arr[maxQ.peekFirst()] - arr[minQ.peekFirst()] > sum) {
-                    break;
-                } else {
-                    r++;
-                }
+        int ans = 0;
+        int left = 0, right = 0;
+        while (right < n) {
+            int in = arr[right];
+            while (!maxQ.isEmpty() && in >= arr[maxQ.peekLast()]) {
+                maxQ.pollLast();
             }
-            count += r - l;
-            // 窗口左边界向右移动
-            // 淘汰队列内过期的值
-            if (maxQ.peekFirst() == l) {
+            maxQ.addLast(right);
+            while (!minQ.isEmpty() && in <= arr[minQ.peekLast()]) {
+                minQ.pollLast();
+            }
+            minQ.addLast(right);
+        }
+        // 扩大窗口
+        right++;
+        while (maxQ.peekFirst() - minQ.peekFirst() > sum) {
+            ans += right - left - 1;
+            if (maxQ.peekFirst() == left) {
                 maxQ.pollFirst();
             }
-            if (minQ.peekFirst() == l) {
+            if (minQ.peekFirst() == left) {
                 minQ.pollFirst();
             }
+            // 缩小窗口
+            left++;
         }
-        return count;
+        return ans;
     }
 
     public static void main(String[] args) {

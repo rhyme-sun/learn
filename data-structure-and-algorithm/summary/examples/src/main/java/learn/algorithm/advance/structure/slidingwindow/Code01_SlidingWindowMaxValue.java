@@ -41,26 +41,31 @@ public class Code01_SlidingWindowMaxValue {
             return null;
         }
         int n = arr.length;
-        int[] res = new int[n - w + 1];
-        Deque<Integer> maxQ = new LinkedList<>();
-        int l = 0, r = 0;
-        for (; r < n; r++) {
-            // r 入队
-            while (!maxQ.isEmpty() && arr[maxQ.peekLast()] <= arr[r]) {
-                maxQ.pollLast();
+        int[] ans = new int[n - w + 1];
+        int left = 0, right = 0;
+        // 使用双端队列，头部存放存放窗口内最大值下标
+        Deque<Integer> deque = new LinkedList<>();
+        while (right < n) {
+            int in = arr[right];
+            // 这里弹出队列的条件要不要等于都可以
+            while (!deque.isEmpty() && in >= arr[deque.peekLast()]) {
+                deque.pollLast();
             }
-            maxQ.addLast(r);
+            deque.addLast(right);
+            // 扩大窗口
+            right++;
 
-            if (r > w - 1) {
-                // l 出队
-                if (maxQ.peekFirst() == l) {
-                    maxQ.pollFirst();
+            while (right - left == w) {
+                int maxIndex = deque.peekFirst();
+                ans[left] = arr[maxIndex];
+                if (maxIndex == left) {
+                    deque.pollFirst();
                 }
-                l++;
+                // 缩小窗口
+                left++;
             }
-            res[l] = arr[maxQ.peekFirst()];
         }
-        return res;
+        return ans;
     }
 
     public static void main(String[] args) {

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/util https://www.springframework.org/schema/util/spring-util.xsd">
+
+    <bean id="person" class="learn.spring.ioc.populate.Person">
+        <property name="name">
+            <null></null>
+        </property>
+        <property name="address" ref="address"/>
+        <property name="books">
+            <list>
+                <bean id="book1" class="learn.spring.ioc.populate.Book">
+                    <property name="name" value="百年孤独"></property>
+                    <property name="author" value="马尔克斯"></property>
+                    <property name="price" value="100"></property>
+                </bean>
+                <ref bean="book2"></ref>
+            </list>
+        </property>
+        <property name="maps" ref="myMap"/>
+        <property name="properties">
+            <props>
+                <prop key="aaa">aaa</prop>
+                <prop key="bbb">222</prop>
+            </props>
+        </property>
+        <property name="hobbies">
+            <array>
+                <value>book</value>
+                <value>movie</value>
+                <value>game</value>
+            </array>
+        </property>
+        <property name="sets">
+            <set>
+                <value>111</value>
+                <value>222</value>
+                <value>222</value>
+            </set>
+        </property>
+    </bean>
+    <bean id="address" class="learn.spring.ioc.populate.Address">
+        <property name="province" value="Shanxi"></property>
+        <property name="city" value="Xi'an"></property>
+        <property name="town" value="Chang"></property>
+    </bean>
+    <bean id="book2" class="learn.spring.ioc.populate.Book">
+        <property name="name" value="平凡的世界"></property>
+        <property name="author" value="路遥"></property>
+        <property name="price" value="120"></property>
+    </bean>
+    <util:map id="myMap">
+        <entry key="key1" value="value1"></entry>
+        <entry key="key2" value-ref="book2"></entry>
+        <entry key="key03">
+            <bean class="learn.spring.ioc.populate.Book">
+                <property name="name" value="西游记"></property>
+                <property name="author" value="吴承恩"></property>
+                <property name="price" value="100"></property>
+            </bean>
+        </entry>
+    </util:map>
+</beans>

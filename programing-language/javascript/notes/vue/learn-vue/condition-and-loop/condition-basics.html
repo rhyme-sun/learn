@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="description" content="Vue 条件判断">
+    <title>条件判断</title>
+</head>
+
+<body>
+    <div id="condition-basics">
+        <h1 v-if="awesome">Vue is awesome!</h1>
+        <h1 v-else>Oh no 😢</h1>
+
+        <template v-if="ok">
+            <h1>Title</h1>
+            <p>Paragraph 1</p>
+            <p>Paragraph 2</p>
+        </template>
+
+        <span v-if="type === 'A'">
+            A
+        </span>
+        <span v-else-if="type === 'B'">
+            B
+        </span>
+        <span v-else-if="type === 'C'">
+            C
+        </span>
+        <span v-else>
+            Not A/B/C
+        </span>
+    </div>
+
+    <script src="https://unpkg.com/vue@next"></script>
+
+
+    <script>
+        const ConditionBasics = {
+            data() {
+                return {
+                    awesome: true,
+                    ok: true,
+                    type: "D"
+                }
+            }
+        }
+
+        const vm = Vue.createApp(ConditionBasics).mount("#condition-basics")
+    </script>
+</body>
+
+</html>

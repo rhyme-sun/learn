@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="description" content="使用侦听器来监听响应式数据的变化。">
+    <title>侦听器</title>
+</head>
+
+<body>
+    <div id="watch-example">
+        <p>
+            Ask a yes/no question:
+            <input v-model="question" />
+        </p>
+        <p>{{ answer }}</p>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/axios@0.12.0/dist/axios.min.js"></script>
+    <script src="https://unpkg.com/vue@next"></script>
+
+    <script>
+        const WatchBasics = {
+            data() {
+                return {
+                    question: '',
+                    answer: 'Questions usually contain a question mark. ;-)'
+                }
+            },
+            watch: {
+                // whenever question changes, this function will run
+                question(newQuestion, oldQuestion) {
+                    console.log("newQuestion: " + newQuestion)
+                    console.log("oldQuestion: " + oldQuestion)
+                    if (newQuestion.indexOf('?') > -1) {
+                        this.getAnswer()
+                    }
+                }
+            },
+            methods: {
+                getAnswer() {
+                    this.answer = 'Thinking...'
+                    axios
+                        .get('https://yesno.wtf/api')
+                        .then(response => {
+                            this.answer = response.data.answer
+                        })
+                        .catch(error => {
+                            this.answer = 'Error! Could not reach the API. ' + error
+                        })
+                }
+            }
+        }
+        const vm = Vue.createApp(WatchBasics).mount('#watch-example')
+    </script>
+</body>
+
+</html>

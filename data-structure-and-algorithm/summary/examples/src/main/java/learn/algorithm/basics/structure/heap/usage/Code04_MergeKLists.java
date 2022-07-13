@@ -12,34 +12,23 @@ import java.util.PriorityQueue;
 public class Code04_MergeKLists {
 
     static ListNode mergeKLists(ListNode[] lists) {
-        if (lists == null || lists.length == 0) {
-            return null;
-        }
-        PriorityQueue<ListNode> minHeap = new PriorityQueue<>(Comparator.comparing(k -> k.val));
-        for (ListNode list : lists) {
-            if (list != null) {
-                minHeap.offer(list);
+        ListNode dummy = new ListNode(-1);
+        ListNode p = dummy;
+        PriorityQueue<ListNode> queue = new PriorityQueue<>(Comparator.comparing(n -> n.val));
+        for (ListNode node : lists) {
+            if (node != null) {
+                queue.add(node);
             }
         }
-        if (minHeap.isEmpty()) {
-            return null;
-        }
-        ListNode head = minHeap.poll();
-        if (head.next != null) {
-            minHeap.offer(head.next);
-            head.next = null;
-        }
-        ListNode pre = head;
-        while(!minHeap.isEmpty()) {
-            ListNode node = minHeap.poll();
-            if (node.next != null) {
-                minHeap.offer(node.next);
+        while (!queue.isEmpty()) {
+            ListNode poll = queue.poll();
+            if (poll.next != null) {
+                queue.add(poll.next);
             }
-            pre.next = node;
-            node.next = null;
-            pre = node;
+            p.next = poll;
+            p = p.next;
         }
-        return head;
+        return dummy.next;
     }
 
     // 单链表节点

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="constructorUser" class="learn.spring.bean.domain.User">
+        <constructor-arg name="id" value="1">
+        </constructor-arg>
+        <constructor-arg name="age" value="18">
+        </constructor-arg>
+        <constructor-arg name="name" value="ConstructorUser-Simon">
+        </constructor-arg>
+    </bean>
+
+    <bean id="factoryMethodUser" class="learn.spring.bean.domain.User" factory-method="createUser"></bean>
+
+    <bean id="factoryUser" factory-bean="userFactory" factory-method="createUser"></bean>
+    <bean id="userFactory" class="learn.spring.bean.domain.DefaultUserFactory"></bean>
+
+    <bean id="userByFactoryBean" class="learn.spring.bean.domain.UserFactoryBean"></bean>
+
+    <bean id="serviceLoaderByFactoryBean" class="org.springframework.beans.factory.serviceloader.ServiceLoaderFactoryBean">
+        <property name="serviceType" value="learn.spring.bean.domain.UserFactory"></property>
+     </bean>
+</beans>

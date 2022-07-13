@@ -8,6 +8,8 @@ import learn.algorithm.comparator.ArrayComparator;
  */
 public class MergeSort {
 
+    private static int[] help;
+
     /**
      * 递归实现
      */
@@ -15,6 +17,7 @@ public class MergeSort {
         if (arr == null || arr.length < 2) {
             return;
         }
+        help = new int[arr.length];
         process(arr, 0, arr.length - 1);
     }
 
@@ -29,23 +32,23 @@ public class MergeSort {
     }
 
     private static void merge(int[] arr, int l, int m, int r) {
-        int[] temp = new int[r - l + 1];
+        int len = l - r + 1;
         int i = 0;
         int p1 = l;
         int p2 = m + 1;
         while (p1 <= m && p2 <= r) {
-            temp[i++] = arr[p1] <= arr[p2] ? arr[p1++] : arr[p2++];
+            help[i++] = arr[p1] <= arr[p2] ? arr[p1++] : arr[p2++];
         }
 
         while (p1 <= m) {
-            temp[i++] = arr[p1++];
+            help[i++] = arr[p1++];
         }
         while (p2 <= r) {
-            temp[i++] = arr[p2++];
+            help[i++] = arr[p2++];
         }
 
-        for (int j = 0; j < temp.length; j++) {
-            arr[l + j] = temp[j];
+        for (int j = 0; j < len; j++) {
+            arr[l + j] = help[j];
         }
     }
 
@@ -80,7 +83,6 @@ public class MergeSort {
             mergeSize <<= 1;
         }
     }
-
 
 
     public static void main(String[] args) {

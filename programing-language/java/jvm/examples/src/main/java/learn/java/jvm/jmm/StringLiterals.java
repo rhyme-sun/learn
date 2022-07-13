@@ -22,6 +22,13 @@ public class StringLiterals {
         // String#intern 方法返回与此字符串（对象）值相同并来自于字符串常量池的唯一字符串
         // true
         System.out.println(hello == ("Hel" + lo).intern());
+
+        // true
+        String str1 = new StringBuilder().append("Hello ").append("World").toString();
+        System.out.println(str1 == str1.intern());
+        // false
+        String str2 = new StringBuilder().append("Hello ").append("World").toString();
+        System.out.println(str2 == str2.intern());
     }
 }
 

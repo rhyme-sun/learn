@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean class="learn.spring.dependency.injection.method.SingletonFoo">
+        <lookup-method name="getPrototypeFoo" bean="prototypeFoo"/>
+        <replaced-method name="method" replacer="fooMethodReplacer"/>
+    </bean>
+
+    <bean id="prototypeFoo" class="learn.spring.dependency.injection.method.PrototypeFoo" scope="prototype"/>
+
+    <bean id="fooMethodReplacer" class="learn.spring.dependency.injection.method.FooMethodReplacer"/>
+</beans>

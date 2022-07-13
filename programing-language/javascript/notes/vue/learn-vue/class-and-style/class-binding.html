@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="description" content="元素 Class 属性绑定增强。">
+    <title>Class属性绑定</title>
+</head>
+
+<body>
+
+    <div id="bind-class">
+        <p :class="classObject.static">字符串表示</p>
+        <p :class="{active: classObject.isActive, 'text-danger': classObject.hasError}">对象表示</p>
+        <p :class="classObject">ClassObject</p>
+        <p :class="computedClassObject">ComputedClassObject</p>
+
+        <p :class="[activeClass, errorClass]">数组语法</p>
+        <p :class="[classObject.isActive ? activeClass : '', errorClass]">数组语法条件判断</p>
+        <p :class="[{active: classObject.isActive}, errorClass]">数组语法对象语法组合使用</p>
+    </div>
+
+    <script src="https://unpkg.com/vue@next"></script>
+
+    <script>
+        const ClassBinding = {
+            data() {
+                return {
+                    classObject: {
+                        static: "static",
+                        isActive: true,
+                        hasError: true
+                    },
+                    activeClass: "active",
+                    errorClass: "text-danger"
+                }
+            },
+            computed: {
+                computedClassObject() {
+                    return {
+                        active: this.classObject.isActive && !this.classObject.error,
+                        'text-danger': this.classObject.error && this.classObject.error.type === 'fatal'
+                    }
+                }
+            }
+        }
+        const vm = Vue.createApp(ClassBinding).mount("#bind-class")
+    </script>
+</body>
+
+</html>

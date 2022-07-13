@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charst="utf-8">
+    <meta name="description" content="使用 v-html 展示原始HTML。">
+    <title>原始HTML插值</title>
+</head>
+
+<body>
+    <div id="render-raw-html">
+        <p>Using mustaches: <span>{{ rawHtml }}</span></p>
+        <p>Using v-html directive: <span v-html="rawHtml"></span></p>
+    </div>
+
+    <script src="https://unpkg.com/vue@next"></script>
+
+    <script>
+        const RawHtmlRendering = {
+            data() {
+                return {
+                    rawHtml: "<span style='color: red'>This should be red.</span>"
+                }
+            }
+        }
+
+        const vm = Vue.createApp(RawHtmlRendering).mount("#render-raw-html")
+    </script>
+</body>
+
+</html>

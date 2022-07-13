@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="simon" class="learn.spring.ioc.selfeditor.Person">
+        <property name="name" value="simon"/>
+        <property name="address" value="Shanxi_Shangluo_Zhenan"/>
+    </bean>
+
+    <!--
+    <bean class="org.springframework.beans.factory.config.CustomEditorConfigurer">
+        <property name="propertyEditorRegistrars">
+            <list>
+                <bean class="learn.spring.ioc.selfeditor.AddressPropertyEditorRegistrar"/>
+            </list>
+        </property>
+    </bean>
+    -->
+
+    <bean class="org.springframework.beans.factory.config.CustomEditorConfigurer">
+        <property name="customEditors">
+            <map>
+                <entry key="learn.spring.ioc.selfeditor.Address" value="learn.spring.ioc.selfeditor.AddressPropertyEditor"/>
+            </map>
+        </property>
+    </bean>
+</beans>

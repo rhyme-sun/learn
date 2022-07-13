@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="description" content="使用 {{ variable }} 将元素文本内容和数据绑定。">
+    <title>文本插值</title>
+</head>
+
+<body>
+    <div id="counter">
+        <span>{{ counter }}</span>
+    </div>
+
+    <script src="https://unpkg.com/vue@next"></script>
+
+    <script>
+        const Counter = {
+            data() {
+                return {
+                    counter: 0
+                }
+            }
+        };
+        // use app to change counter, such as "app.counter = 1"
+        const vm = Vue.createApp(Counter).mount("#counter");
+    </script>
+</body>
+
+</html>

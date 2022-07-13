@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="description" content="使用 v-on 命令绑定事件。">
+    <title>事件绑定</title>
+</head>
+
+<body>
+    <div id="bind-event">
+        <p>{{ message }}</p>
+        <!-- <button v-on:click="reverseMessage">Reverse Message</button> -->
+        <!-- 上述简写方式 -->
+        <button @click="reverseMessage">Reverse Message</button>
+        <p>{{ handleMessage(message) }}</p>
+    </div>
+
+    <script src="https://unpkg.com/vue@next"></script>
+
+    <script>
+        const EventBinding = {
+            data() {
+                return {
+                    message: "123456789"
+                }
+            },
+            methods: {
+                reverseMessage() {
+                    this.message = this.message
+                        .split('')
+                        .reverse()
+                        .join('')
+                },
+                handleMessage(message) {
+                    return "Message is :" + message
+                }
+            },
+        }
+        const vm = Vue.createApp(EventBinding).mount("#bind-event");
+    </script>
+</body>
+
+</html>

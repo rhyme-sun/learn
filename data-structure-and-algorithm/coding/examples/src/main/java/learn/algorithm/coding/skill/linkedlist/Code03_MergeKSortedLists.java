@@ -1,0 +1,40 @@
+package learn.algorithm.coding.skill.linkedlist;
+
+import java.util.Comparator;
+import java.util.PriorityQueue;
+
+/**
+ * 给你一个链表数组，每个链表都已经按升序排列。请你将所有链表合并到一个升序链表中，返回合并后的链表。
+ * https://leetcode.cn/problems/merge-k-sorted-lists/
+ */
+public class Code03_MergeKSortedLists {
+
+    public ListNode mergeKLists(ListNode[] lists) {
+        ListNode dummy = new ListNode(-1);
+        ListNode p = dummy;
+        PriorityQueue<ListNode> queue = new PriorityQueue<>(Comparator.comparing(n -> n.val));
+        for (ListNode node : lists) {
+            if (node != null) {
+                queue.add(node);
+            }
+        }
+        while (!queue.isEmpty()) {
+            ListNode poll = queue.poll();
+            if (poll.next != null) {
+                queue.add(poll.next);
+            }
+            p.next = poll;
+            p = p.next;
+        }
+        return dummy.next;
+    }
+
+    private static class ListNode {
+        int val;
+        ListNode next;
+
+        ListNode(int val) {
+            this.val = val;
+        }
+    }
+}

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="description" content="使用 v-bind 命令将元素属性值和数据绑定。">
+    <title>属性绑定</title>
+</head>
+
+<body>
+    <div id="bind-attribute">
+        <!-- <span v-bind:title="message">鼠标悬浮查看 title 属性</span> -->
+        <!-- 上述简写方式 -->
+        <span :title="message">鼠标悬浮查看 title 属性</span>
+    </div>
+
+    <script src="https://unpkg.com/vue@next"></script>
+
+    <script>
+        const AttributeBinding = {
+            data() {
+                return {
+                    message: "Hello Simon"
+                }
+            }
+        };
+        // use app to change message, such as "app.message = 'Hello Ace'"
+        const vm = Vue.createApp(AttributeBinding).mount("#bind-attribute");
+    </script>
+</body>
+
+</html>
