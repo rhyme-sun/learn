@@ -2,12 +2,13 @@ package learn.java.basics.io.base;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.util.Arrays;
+import java.io.Serializable;
 
+import com.esotericsoftware.kryo.Kryo;
+import com.esotericsoftware.kryo.io.Input;
+import com.esotericsoftware.kryo.io.Output;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -17,55 +18,81 @@ import lombok.extern.slf4j.Slf4j;
 public class SerializationExample {
 
     public static void main(String[] args) {
-//        example1();
+        //example();
         example2();
     }
 
-    private static void example1() {
-        try (ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-             ObjectOutputStream output = new ObjectOutputStream(buffer)) {
-            // 写入 int:
-            output.writeInt(12345);
-            // 写入 String:
-            output.writeUTF("Hello");
-            // 写入 Object:
-            output.writeObject(Double.valueOf(123.456));
-            log.info(Arrays.toString(buffer.toByteArray()));
-        } catch (IOException e) {
+    // JDK 序列化和反序列化简单示例
+    private static void example()  {
+        try {
+            Person person = new Person(20, "Simon", "Xi'an");
+            System.out.println(person);
+
+            // 序列化
+            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+            ObjectOutputStream output = new ObjectOutputStream(buffer);
+            output.writeObject(person);
+            output.close();
+
+            // 反序列化
+            ByteArrayInputStream inputStream = new ByteArrayInputStream(buffer.toByteArray());
+            ObjectInputStream input = new ObjectInputStream(inputStream);
+            Person person2 = (Person) input.readObject();
+            input.close();
+            System.out.println(person2);
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    private static void example2() {
-        try (InputStream inputStream = serialize();
-             ObjectInputStream input = new ObjectInputStream(inputStream)) {
-            int n = input.readInt();
-            String s = input.readUTF();
-            Double d = (Double) input.readObject();
-            // 12345
-            log.info("{}", n);
-            // hello
-            log.info("{}", s);
-            // 123.456
-            log.info("{}", d);
-        } catch (IOException | ClassNotFoundException e) {
+    static void example2() {
+        try {
+            Person person = new Person(20, "Simon", "Xi'an");
+            System.out.println(person);
+
+            Kryo kryo = new Kryo();
+            kryo.register(Person.class);
+
+            // 序列化
+            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+            Output output = new Output(buffer);
+            kryo.writeObject(output, person);
+            output.close();
+
+            // 反序列化
+            Input input = new Input(new ByteArrayInputStream(buffer.toByteArray()));
+            Person person2 = kryo.readObject(input, Person.class);
+            input.close();
+            System.out.println(person2);
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    private static InputStream serialize() {
-        try (ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-             ObjectOutputStream output = new ObjectOutputStream(buffer)) {
-            // 写入 int:
-            output.writeInt(12345);
-            // 写入 String:
-            output.writeUTF("Hello");
-            // 写入 Object:
-            output.writeObject(Double.valueOf(123.456));
-            return new ByteArrayInputStream(buffer.toByteArray());
-        } catch (IOException e) {
-            e.printStackTrace();
+
+    static class Person implements Serializable {
+
+        private int age;
+        private String name;
+        private transient String address;
+
+        public Person() {
         }
-        return null;
+
+        public Person(int age, String name, String address) {
+            this.age = age;
+            this.name = name;
+            this.address = address;
+            System.out.println("constructor...");
+        }
+
+        @Override
+        public String toString() {
+            return "Person{" +
+                    "age=" + age +
+                    ", name='" + name + '\'' +
+                    ", address='" + address + '\'' +
+                    '}';
+        }
     }
 }
