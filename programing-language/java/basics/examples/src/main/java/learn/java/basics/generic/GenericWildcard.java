@@ -54,7 +54,7 @@ public class GenericWildcard {
         apples.add(new Apple());
         apples.add(new GreenApple());
 
-        // 读的对象只能用 Object 接受
+        // 读的对象只能用 Object 接收
         Object object = apples.get(0);
         log.info("{}", object);
     }
