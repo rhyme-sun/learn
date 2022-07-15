@@ -17,6 +17,7 @@ public class FutureExample {
 
     public static void main(String[] args) throws ExecutionException, InterruptedException {
         ExecutorService executor = Executors.newFixedThreadPool(1);
+        // 通过 shareMap 传递线程执行结果
         Map<String, Object> shareMap = new HashMap<>();
         final Future<Map<String, Object>> submit = executor.submit(new Task(shareMap), shareMap);
         final Map<String, Object> map = submit.get();
