@@ -1,4 +1,4 @@
-package learn.java.concurrency.cas;
+package learn.java.concurrency.juc.atomic.cas;
 
 /**
  * CAS.

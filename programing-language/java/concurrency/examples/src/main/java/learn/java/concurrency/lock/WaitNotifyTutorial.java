@@ -62,7 +62,7 @@ public class WaitNotifyTutorial {
         }
 
         new Thread(() -> {
-            System.out.println("t1启动");
+            System.out.println("t1 启动");
             synchronized (lock) {
                 for (int i = 0; i < 10; i++) {
                     c.add(new Object());

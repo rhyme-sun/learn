@@ -1,4 +1,4 @@
-package learn.java.concurrency.cas;
+package learn.java.concurrency.juc.atomic.cas;
 
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.atomic.LongAdder;

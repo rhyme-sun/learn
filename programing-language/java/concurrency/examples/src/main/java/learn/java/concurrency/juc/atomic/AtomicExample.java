@@ -3,9 +3,9 @@ package learn.java.concurrency.juc.atomic;
 import java.util.concurrent.atomic.AtomicLong;
 
 /**
- * AtomicTutorial.
+ * AtomicExample.
  */
-public class AtomicTutorial {
+public class AtomicExample {
 
     static AtomicLong count = new AtomicLong(0);
 
