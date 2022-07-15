@@ -12,14 +12,8 @@ import java.util.WeakHashMap;
 public class WeakReferenceExample {
 
     public static void main(String[] args) {
-        Set<String> set = new HashSet<>();
-        set.add(Arrays.toString(new int[]{1, 2}));
-        set.add(Arrays.toString(new int[]{1, 2}));
-        System.out.println(set);
-
-
-        run1();
-        run2();
+//        run1();
+//        run2();
 
         weakHashMap();
     }
