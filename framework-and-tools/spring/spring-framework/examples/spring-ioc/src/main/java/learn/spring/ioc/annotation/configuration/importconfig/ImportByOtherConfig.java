@@ -2,14 +2,12 @@ package learn.spring.ioc.annotation.configuration.importconfig;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
 
 @Configuration
-@Import(ConfigA.class)
-public class ConfigB {
+public class ImportByOtherConfig {
 
     @Bean
-    public B b() {
-        return new B();
+    public ImportedBean importByOtherConfig() {
+        return new ImportedBean("importByOtherConfig");
     }
 }

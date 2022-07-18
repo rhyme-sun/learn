@@ -9,11 +9,8 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 public class ImportConfigExample {
 
     public static void main(String[] args) {
-        ApplicationContext ctx = new AnnotationConfigApplicationContext(ConfigB.class);
+        ApplicationContext ctx = new AnnotationConfigApplicationContext(AppConfig.class);
 
-        A a = ctx.getBean(A.class);
-        B b = ctx.getBean(B.class);
-        System.out.println(a);
-        System.out.println(b);
+        System.out.println(ctx.getBeansOfType(ImportedBean.class));
     }
 }
