@@ -47,8 +47,6 @@
 
 
 
-
-
 ### 表格数据转 JSON 字符串
 
 [表格转 JSON 功能。 - 活字格专区 - 产品需求 - 葡萄城产品技术社区 (grapecity.com.cn)](https://gcdn.grapecity.com.cn/forum.php?mod=viewthread&tid=96382)
