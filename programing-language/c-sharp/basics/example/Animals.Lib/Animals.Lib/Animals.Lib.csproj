@@ -1,15 +1,15 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <OutputType>Exe</OutputType>
     <TargetFramework>net6.0</TargetFramework>
-    <RootNamespace>learn_c_sharp_basics</RootNamespace>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\CalculatorLibrary\CalculatorLibrary\CalculatorLibrary.csproj" />
+    <Reference Include="BabyScoller.SDK">
+      <HintPath>..\..\BabyScoller.SDK.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>
